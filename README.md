@@ -1,5 +1,9 @@
 Lift templates for giter8
 
+[Scripts][0]
+
+- Helper scripts for creating and managing Lift giter8 templates
+
 [lift24-s29-blank.g8][1]
 
 - blank template for Lift 2.4 and Scala 2.9.x, configured for html5 template parsing instead of default xhtml
@@ -32,6 +36,7 @@ Lift templates for giter8
 
 - MVC template for Lift 2.4 and Scala 2.9.x, plus html5-boilerplate, current stable Kickstrap, and configured for html5 parsing instead of default xhtml
 
+[0]: http://github.com/lift-stack/giter8-templates
 [1]: http://github.com/lift-stack/lift24-s29-blank.g8
 [2]: http://github.com/lift-stack/lift24-s29-html5bp.g8
 [3]: http://github.com/lift-stack/lift24-s29-html5bp-bootstrap.g8

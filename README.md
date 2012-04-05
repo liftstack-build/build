@@ -1,6 +1,6 @@
-Lift templates for giter8
+# Lift templates for giter8
 
-[Scripts][0]
+[scripts][0]
 
 - Helper scripts for creating and managing Lift giter8 templates
 

@@ -1,0 +1,1 @@
+scripts/build-lift24-s29-blank.g8.sh

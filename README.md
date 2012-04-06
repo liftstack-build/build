@@ -6,35 +6,35 @@
 
 [lift24-s29-blank.g8][1]
 
-- blank template for Lift 2.4 and Scala 2.9.x, configured for html5 template parsing instead of default xhtml
+- blank template for Lift 2.4 and Scala 2.9.x, configured for [html5 template parsing instead of default xhtml][12]
 
 [lift24-s29-html5bp.g8][2]
 
-- blank template for Lift 2.4 and Scala 2.9.x, plus [HTML5 Boilerplate][9] and [configured for html5 parsing instead of default xhtml][12]
+- blank template for Lift 2.4 and Scala 2.9.x, plus [HTML5 Boilerplate][9] and [configured for html5 template parsing instead of default xhtml][12]
 
 [lift24-s29-html5bp-bootstrap.g8][3]
 
-- template for Lift 2.4 and Scala 2.9.x, plus [HTML5 Boilerplate][9], current stable [Bootstrap][10], and [configured for html5 parsing instead of default xhtml][12]
+- template for Lift 2.4 and Scala 2.9.x, plus [HTML5 Boilerplate][9], current stable [Bootstrap][10], and [configured for html5 template parsing instead of default xhtml][12]
 
 [lift24-s29-html5bp-kickstrap.g8][4]
 
-- template for Lift 2.4 and Scala 2.9.x, plus [HTML5 Boilerplate][9], current stable [Kickstrap][11], and [configured for html5 parsing instead of default xhtml][12]
+- template for Lift 2.4 and Scala 2.9.x, plus [HTML5 Boilerplate][9], current stable [Kickstrap][11], and [configured for html5 template parsing instead of default xhtml][12]
 
 [lift24-s29-mvc-blank.g8][5]
 
-- blank MVC template for Lift 2.4 and Scala 2.9.x, and [configured for html5 parsing instead of default xhtml][12]
+- blank MVC template for Lift 2.4 and Scala 2.9.x, and [configured for html5 template parsing instead of default xhtml][12]
 
 [lift24-s29-mvc-html5bp.g8][6]
 
-- blank MVC template for Lift 2.4 and Scala 2.9.x, plus [HTML5 Boilerplate][9] and [configured for html5 parsing instead of default xhtml][12]
+- blank MVC template for Lift 2.4 and Scala 2.9.x, plus [HTML5 Boilerplate][9] and [configured for html5 template parsing instead of default xhtml][12]
 
 [lift24-s29-mvc-html5bp-bootstrap.g8][7]
 
-- MVC template for Lift 2.4 and Scala 2.9.x, plus [HTML5 Boilerplate][9], current stable [Bootstrap][10], and [configured for html5 parsing instead of default xhtml][12]
+- MVC template for Lift 2.4 and Scala 2.9.x, plus [HTML5 Boilerplate][9], current stable [Bootstrap][10], and [configured for html5 template parsing instead of default xhtml][12]
 
 [lift24-s29-mvc-html5bp-kickstrap.g8][8]
 
-- MVC template for Lift 2.4 and Scala 2.9.x, plus [HTML5 Boilerplate][9], current stable [Kickstrap][11], and [configured for html5 parsing instead of default xhtml][12]
+- MVC template for Lift 2.4 and Scala 2.9.x, plus [HTML5 Boilerplate][9], current stable [Kickstrap][11], and [configured for html5 template parsing instead of default xhtml][12]
 
 [0]: http://github.com/lift-stack/giter8-templates
 [1]: http://github.com/lift-stack/lift24-s29-blank.g8

@@ -1,6 +1,6 @@
 ## Giter8 template for Lift 2.4, Scala 2.9, blank, html5-ready
 
-### Quick Setup:
+### Quick Start:
 
 1.  Install [Java SDK][1] or [OpenJDK][0].
 2.  Install the [Typesafe Stack][8] (Scala, sbt, sbt-extras, giter8) \*

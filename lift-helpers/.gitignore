@@ -5,11 +5,6 @@
 #*
 #!*.*
 
-# # ignore all lift template directories.  they are their own repo's.  this repo only for scripts for making giter8 templates, README, etc.
-lift*
-!lift-helpers
-test
-
 # new and old versions of conffiles, stored by dpkg
 *.dpkg-*
 
@@ -109,3 +104,10 @@ build
 *.perspectivev3
 .oh-my-zsh
 
+# # Giter8 Project Stuff #
+# ########################
+target/
+boot/
+lib_managed/
+src_managed/
+project/plugins/project/

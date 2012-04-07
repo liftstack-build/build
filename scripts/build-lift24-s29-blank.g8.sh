@@ -3,41 +3,98 @@
 # build the giter8 lift template
 
 # Requires:
-# giter8 installed and on your PATH (easy way get this is to use the Typesafe Stack)
+# giter8 [1] installed and on your PATH.  Easy way get this is to use the Typesafe Stack [2].
+# [1]: http://github.com/n8han/giter8 
+# [2]: http://typesafe.com/stack/download
 
 # Usage:
-# sh build-lift-giter8-project.sh [giter8-project-template-dir] [lift-template-dir] [helper-dir] [target-project-dir-name.g8]
+# sh build-lift-giter8-project.sh
+# use commandline params below to override defaults
 
 # Components:
-# 1.  ./lift_blank (blank lift template using lift 2.4 and scala 2.9, from https://github.com/lift/lift_24_sbt)
+# 1.  ./lift_blank (blank lift template using lift 2.4 and scala 2.9) [3] 
 # 2.  ./giter8 project template (created by running 'g8 n8han/giter8')
 # 3.  ./lift-helpers (.gitconfig, README.md)
+# [3]: https://github.com/lift/lift_24_sbt
 
 # Steps:
-# TLDR - start with giter8 project template, then copy lift components and helpers into it
+# TLDR - copy with giter8 project template to target dir, then copy lift components and helpers into it.
 # 0.  Test if target project directory exists:
-# 1.  copy giter8 template to new working directory
-# 2.  copy lift blank template to new working directory, but put lift/src in [working dir]/src/main/g8/src
-# 3.  delete lift template's sbt* from working directory (assuming you have sbt already installed and on PATH)
-# 4.  copy .gitignore and README.md from helpers to working directory, overwriting current ones
+# 1.  copy giter8 template to new working directory ($TARGET)
+# 2.  copy lift blank template to $TARGET, but put lift/src in $TARGET]/src/main/g8/src and lift/project in $TARGET/src/main/g8/project
+# 3.  delete lift template's sbt* files from $TARGET/src/main/g8/ (will use sbt already installed on PATH instead)
+# 4.  copy .gitignore and README.md from helpers to $TARGET, overwriting current ones
 
 # Default params
-GITER8="./giter8-default"
-LIFT="./lift_blank"
-HELPERS="./lift-helpers"
-TARGET="./lift24-s29-blank.g8"
-LIFT_BOOT="$TARGET/src/main/g8/src/main/scala/bootstrap/liftweb/Boot.scala"
-LIFT_BOOT_PATTERN="def boot {"
-LIFT_HTML5_SNIPPET="./html5-boot.scala"
+GITER8="./giter8-default"               #-g8-loc; -gl
+LIFT="./lift_blank"                     #-lift-loc; -ll
+HELPERS="./lift-helpers"                #-helpers-loc; -hl
+TARGET="./lift24-s29-blank.g8"          #-target-loc; -tl
+LIFT_BOOT="$TARGET/src/main/g8/src/main/scala/bootstrap/liftweb/Boot.scala"     #lift-boot; -lb
+LIFT_BOOT_PATTERN="def boot {"          #-lift-boot-pattern; -lbp
+LIFT_HTML5_SNIPPET="./$HELPERS/html5-boot.scala" #-lift-html5-snippet; -lhs
 
-# Commandline param overide
-if [ $1 ]; then GITER8=$1; fi
-if [ $2 ]; then LIFT=$2; fi
-if [ $3 ]; then HELPERS=$3; fi
-if [ $4 ]; then TARGET=$4; fi
-if [ $5 ]; then LIFT_BOOT=$5; fi
-if [ $6 ]; then LIFT_BOOT_PATTERN=$6; fi
-if [ $7 ]; then LIFT_HTML5_SNIPPET=$7; fi
+# Lift properties names 
+DEFAULT_LIFT_PROPERTIES="$TARGET/src/main/g8/project/build.properties"
+DEFAULT_PROJECT_ORGANIZATION="project.organization"
+DEFAULT_PROJECT_NAME="project.name"
+DEFAULT_SBT_VERSION="sbt.version"
+DEFAULT_PROJECT_VERSION="project.version"
+jDEFAULT_DEF_SCALA_VERSION="def.scala.version"
+DEFAULT_BUILD_SCALA_VERSIONS="build.scala.versions"
+DEFAULT_PROJECT_INITIALIZE="project.initialize"
+DEFAULT_LIFT_VERSION="lift.version"
+
+# Lift properties default values
+LIFT_PROPERTIES="$DEFAULT_LIFT_PROPERTIES"  #-lift-properties; -lp
+PROJECT_ORGANIZATION="Lift"                 #-project-org; -po
+PROJECT_NAME="Lift SBT Template"            #-project-name; -pn
+SBT_VERSION="0.11.2"                        #-sbt-version; -sv
+PROJECT_VERSION="0.1"                       #-project-version; -pv
+DEF_SCALA_VERSION="2.9.0-1"                 #-def-scala-version; -dsv
+BUILD_SCALA_VERSIONS="2.9.0-1"              #-build-scala-versions; -bsv
+PROJECT_INITIALIZE="false"                  #-project-initialize; -pi
+LIFT_VERSION="2.4"                          #-lift-version; -lv
+
+# override above vars with any passed commandline opts (getops can't parse GNU style \
+# long options, so both long and short denoted by single - )
+while getopts "g8-loc:gl:lift-loc:ll:helpers-loc:hl:target-loc:tl:lift-boot:lb:\
+    lift-boot-pattern:lbp:lift-html5-snippet:lhs:project-org:po:project-name:pn:\
+    sbt-version:sv:project-version:pv:def-scala-version:dsv:build-scala-versions:\
+    bsv:project-initialize:pi:lift-version:lv" optionName; do
+    case "$optionName" in 
+    g8-loc)                 GITER8="$OPTARG";;
+    gl)                     GITER8="$OPTARG";;
+    lift-loc)               LIFT="$OPTARG";;
+    ll)                     LIFT="$OPTARG";;
+    helpers-loc)            HELPERS="$OPTARG";;
+    hl)                     HELPERS="$OPTARG";;
+    target-loc)             TARGET="$OPTARG";;
+    tl)                     TARGET="$OPTARG";;
+    lift-boot)              LIFT_BOOT="$OPTARG";;
+    lb)                     LIFT_BOOT="$OPTARG";;
+    lift-boot-pattern)      LIFT_BOOT_PATTERN="$OPTARG";;
+    lbp)                    LIFT_BOOT_PATTERN="$OPTARG";;
+    lift-html5-snippet)     LIFT_HTML5_SNIPPET="$OPTARG";;
+    lhs)                    LIFT_HTML5_SNIPPET="$OPTARG";;
+    lift-properties)        LIFT_PROPERTIES="$OPTARG";;
+    lp)                     LIFT_PROPERTIES="$OPTARG";;
+    project-org)            PROJECT_ORGANIZATION="$OPTARG";;
+    po)                     PROJECT_ORGANIZATION="$OPTARG";;
+    project-name)           PROJECT_NAME="$OPTARG";;
+    pn)                     PROJECT_NAME="$OPTARG";;
+    sbt-version)            SBT_VERSION="$OPTARG";;
+    sv)                     SBT_VERSION="$OPTARG";;
+    project-version)        PROJECT_VERSION="$OPTARG";;
+    pv)                     PROJECT_VERSION="$OPTARG";;
+    def-scala-version)      DEF_SCALA_VERSION="$OPTARG";;
+    dsv)                    DEF_SCALA_VERSION="$OPTARG";;
+    build-scala-versions)   BUILD_SCALA_VERSIONS="$OPTARG";;
+    bsv)                    BUILD_SCALA_VERSIONS="$OPTARG";;
+    project-initialize)     PROJECT_INITIALIZE="$OPTARG";;
+    pi)                     PROJECT_INITIALIZE="$OPTARG";;
+    lift-version)           LIFT_VERSION="$OPTARG";;
+    lv)                     LIFT_VERSION="$OPTARG";;
 
 echo "Building with:"
 echo "GITER8:               $GITER8"
@@ -47,18 +104,29 @@ echo "TARGET:               $TARGET"
 echo "LIFT_BOOT:            $LIFT_BOOT" 
 echo "LIFT_BOOT_PATTERN:    $LIFT_BOOT_PATTERN"
 echo "LIFT_HTML5_SNIPPET:   $LIFT_HTML5_SNIPPET"
+echo "LIFT_PROPERTIES:      $LIFT_PROPERTIES"
+echo "PROJECT_ORGANIZATION: $PROJECT_ORGANIZATION"
+echo "PROJECT_NAME:         $PROJECT_NAME"
+echo "SBT_VERSION:          $SBT_VERSION"
+echo "PROJECT_VERSION:      $PROJECT_VERSION"
+echo "DEF_SCALA_VERSION:    $DEF_SCALA_VERSION"
+echo "BUILD_SCALA_VERSIONS: $BUILD_SCALA_VERSIONS"
+echo "PROJECT_INITIALIZE:   $PROJECT_INITIALIZE"
+echo "LIFT_VERSION:         $LIFT_VERSION"
+
+
 
 if [ -d "$TARGET" ]; then 
     if [ -L "$TARGET" ]; then
         # Target dir exists and is a symlink.
         # Symbolic link specific commands go here
         #rm "$TARGET"
-        echo "$TARGET exists.  It's a symlink.  Please rename it or change your project directory name."
+        echo "$TARGET exists.  It's a symlink.  Please remove it, rename it, or change your TARGET name."
     else
         # Target dir exists and is a directory.
         # Directory command goes here
         #rmdir "$TARGET"
-        echo "$TARGET exists.  It's a directory.  Please rename it or change your project directory name."
+        echo "$TARGET exists.  It's a directory.  Please remove it, rename it, or change your TARGET name."
     fi
 else
     # Target dir does not exist, proceed with build:
@@ -73,7 +141,14 @@ else
     # insert html5 enabler into Boot.scala
     sed -i "/$LIFT_BOOT_PATTERN/r $LIFT_HTML5_SNIPPET" $LIFT_BOOT
     
-    # update build.properties to sbt 0.11.x and Scala 2.9.x
-    #sed -e '/$LIFT_BOOT_PATTERN/r $LIFT_HTML5_SNIPPET' $LIFT_BOOT
-    #sed -e '/$LIFT_BOOT_PATTERN/r $LIFT_HTML5_SNIPPET' $LIFT_BOOT
+    # update build.properties
+    sed -i "s/$DEFAULT_PROJECT_ORGANIZATION=.*/$PROJECT_ORGANIZATION" $LIFT_PROPERTIES
+    sed -i "s/$DEFAULT_PROJECT_NAME=.*/$PROJECT_NAME" $LIFT_PROPERTIES
+    sed -i "s/$DEFAULT_SBT_VERSION=.*/$SBT_VERSION" $LIFT_PROPERTIES
+    sed -i "s/$DEFAULT_PROJECT_VERSION=.*/$PROJECT_VERSION" $LIFT_PROPERTIES
+    sed -i "s/$DEFAULT_DEF_SCALA_VERSION=.*/$DEF_SCALA_VERSION" $LIFT_PROPERTIES
+    sed -i "s/$DEFAULT_BUILD_SCALA_VERSIONS=.*/$BUILD_SCALA_VERSIONS" $LIFT_PROPERTIES
+    sed -i "s/$DEFAULT_PROJECT_INITIALIZE=.*/$PROJECT_INITIALIZE" $LIFT_PROPERTIES
+    sed -i "s/$DEFAULT_LIFT_VERSION=.*/$LIFT_VERSION" $LIFT_PROPERTIES
+
 fi

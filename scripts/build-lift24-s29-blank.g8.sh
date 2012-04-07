@@ -18,12 +18,13 @@
 # [3]: https://github.com/lift/lift_24_sbt
 
 # Steps:
-# TLDR - copy with giter8 project template to target dir, then copy lift components and helpers into it.
+# TLDR - copy giter8 project template to target dir, then copy lift components and helpers into it, modify config files
 # 0.  Test if target project directory exists:
 # 1.  copy giter8 template to new working directory ($TARGET)
 # 2.  copy lift blank template to $TARGET, but put lift/src in $TARGET]/src/main/g8/src and lift/project in $TARGET/src/main/g8/project
 # 3.  delete lift template's sbt* files from $TARGET/src/main/g8/ (will use sbt already installed on PATH instead)
 # 4.  copy .gitignore and README.md from helpers to $TARGET, overwriting current ones
+# 5.  use sed to modify several config files
 
 # Default params
 GITER8="./giter8-default"                   #-g8-loc; -gl
@@ -34,7 +35,7 @@ LIFT_BOOT="$TARGET/src/main/g8/src/main/scala/bootstrap/liftweb/Boot.scala"     
 LIFT_BOOT_PATTERN="def boot {"              #-lift-boot-pattern; -lbp
 LIFT_HTML5_SNIPPET="$HELPERS/html5-boot.scala" #-lift-html5-snippet; -lhs
 
-# Lift properties names 
+# Lift properties config file
 DEFAULT_LIFT_PROPERTIES="$TARGET/src/main/g8/project/build.properties"
 DEFAULT_PROJECT_ORGANIZATION="project.organization"
 DEFAULT_PROJECT_NAME="project.name"
@@ -57,7 +58,7 @@ PROJECT_INITIALIZE="false"                  #-project-initialize; -pi
 LIFT_VERSION="2.4"                          #-lift-version; -lv
 
 # override above vars with any passed commandline opts (getops can't parse GNU style \
-# long options, so both long and short denoted by single - )
+# -- long options, so both long and short denoted by single - )
 while getopts "g8-loc:gl:lift-loc:ll:helpers-loc:hl:target-loc:tl:lift-boot:lb:\
     lift-boot-pattern:lbp:lift-html5-snippet:lhs:project-org:po:project-name:pn:\
     sbt-version:sv:project-version:pv:def-scala-version:dsv:build-scala-versions:\
@@ -118,7 +119,7 @@ echo "PROJECT_INITIALIZE:   $PROJECT_INITIALIZE"
 echo "LIFT_VERSION:         $LIFT_VERSION"
 
 
-
+# Main
 if [ -d "$TARGET" ]; then 
     if [ -L "$TARGET" ]; then
         # Target dir exists and is a symlink.
@@ -146,7 +147,7 @@ else
     # insert html5 enabler into Boot.scala
     sed -i "/$LIFT_BOOT_PATTERN/r $LIFT_HTML5_SNIPPET" $LIFT_BOOT
     
-    # update build.properties
+    # update Lift build.properties
     sed -i "s/$DEFAULT_PROJECT_ORGANIZATION=.*/$DEFAULT_PROJECT_ORGANIZATION=$PROJECT_ORGANIZATION/" $LIFT_PROPERTIES
     sed -i "s/$DEFAULT_PROJECT_NAME=.*/$DEFAULT_PROJECT_NAME=$PROJECT_NAME/" $LIFT_PROPERTIES
     sed -i "s/$DEFAULT_SBT_VERSION=.*/$DEFAULT_SBT_VERSION=$SBT_VERSION/" $LIFT_PROPERTIES

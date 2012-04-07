@@ -26,13 +26,13 @@
 # 4.  copy .gitignore and README.md from helpers to $TARGET, overwriting current ones
 
 # Default params
-GITER8="./giter8-default"               #-g8-loc; -gl
-LIFT="./lift_blank"                     #-lift-loc; -ll
-HELPERS="./lift-helpers"                #-helpers-loc; -hl
-TARGET="./lift24-s29-blank.g8"          #-target-loc; -tl
+GITER8="./giter8-default"                   #-g8-loc; -gl
+LIFT="./lift_blank"                         #-lift-loc; -ll
+HELPERS="./lift-helpers"                    #-helpers-loc; -hl
+TARGET="./lift24-s29-blank.g8"              #-target-loc; -tl
 LIFT_BOOT="$TARGET/src/main/g8/src/main/scala/bootstrap/liftweb/Boot.scala"     #lift-boot; -lb
-LIFT_BOOT_PATTERN="def boot {"          #-lift-boot-pattern; -lbp
-LIFT_HTML5_SNIPPET="./$HELPERS/html5-boot.scala" #-lift-html5-snippet; -lhs
+LIFT_BOOT_PATTERN="def boot {"              #-lift-boot-pattern; -lbp
+LIFT_HTML5_SNIPPET="$HELPERS/html5-boot.scala" #-lift-html5-snippet; -lhs
 
 # Lift properties names 
 DEFAULT_LIFT_PROPERTIES="$TARGET/src/main/g8/project/build.properties"
@@ -40,7 +40,7 @@ DEFAULT_PROJECT_ORGANIZATION="project.organization"
 DEFAULT_PROJECT_NAME="project.name"
 DEFAULT_SBT_VERSION="sbt.version"
 DEFAULT_PROJECT_VERSION="project.version"
-jDEFAULT_DEF_SCALA_VERSION="def.scala.version"
+DEFAULT_DEF_SCALA_VERSION="def.scala.version"
 DEFAULT_BUILD_SCALA_VERSIONS="build.scala.versions"
 DEFAULT_PROJECT_INITIALIZE="project.initialize"
 DEFAULT_LIFT_VERSION="lift.version"

@@ -63,38 +63,41 @@ while getopts "g8-loc:gl:lift-loc:ll:helpers-loc:hl:target-loc:tl:lift-boot:lb:\
     sbt-version:sv:project-version:pv:def-scala-version:dsv:build-scala-versions:\
     bsv:project-initialize:pi:lift-version:lv" optionName; do
     case "$optionName" in 
-    g8-loc)                 GITER8="$OPTARG";;
-    gl)                     GITER8="$OPTARG";;
-    lift-loc)               LIFT="$OPTARG";;
-    ll)                     LIFT="$OPTARG";;
-    helpers-loc)            HELPERS="$OPTARG";;
-    hl)                     HELPERS="$OPTARG";;
-    target-loc)             TARGET="$OPTARG";;
-    tl)                     TARGET="$OPTARG";;
-    lift-boot)              LIFT_BOOT="$OPTARG";;
-    lb)                     LIFT_BOOT="$OPTARG";;
-    lift-boot-pattern)      LIFT_BOOT_PATTERN="$OPTARG";;
-    lbp)                    LIFT_BOOT_PATTERN="$OPTARG";;
-    lift-html5-snippet)     LIFT_HTML5_SNIPPET="$OPTARG";;
-    lhs)                    LIFT_HTML5_SNIPPET="$OPTARG";;
-    lift-properties)        LIFT_PROPERTIES="$OPTARG";;
-    lp)                     LIFT_PROPERTIES="$OPTARG";;
-    project-org)            PROJECT_ORGANIZATION="$OPTARG";;
-    po)                     PROJECT_ORGANIZATION="$OPTARG";;
-    project-name)           PROJECT_NAME="$OPTARG";;
-    pn)                     PROJECT_NAME="$OPTARG";;
-    sbt-version)            SBT_VERSION="$OPTARG";;
-    sv)                     SBT_VERSION="$OPTARG";;
-    project-version)        PROJECT_VERSION="$OPTARG";;
-    pv)                     PROJECT_VERSION="$OPTARG";;
-    def-scala-version)      DEF_SCALA_VERSION="$OPTARG";;
-    dsv)                    DEF_SCALA_VERSION="$OPTARG";;
-    build-scala-versions)   BUILD_SCALA_VERSIONS="$OPTARG";;
-    bsv)                    BUILD_SCALA_VERSIONS="$OPTARG";;
-    project-initialize)     PROJECT_INITIALIZE="$OPTARG";;
-    pi)                     PROJECT_INITIALIZE="$OPTARG";;
-    lift-version)           LIFT_VERSION="$OPTARG";;
-    lv)                     LIFT_VERSION="$OPTARG";;
+        g8-loc)                 GITER8="$OPTARG";;
+        gl)                     GITER8="$OPTARG";;
+        lift-loc)               LIFT="$OPTARG";;
+        ll)                     LIFT="$OPTARG";;
+        helpers-loc)            HELPERS="$OPTARG";;
+        hl)                     HELPERS="$OPTARG";;
+        target-loc)             TARGET="$OPTARG";;
+        tl)                     TARGET="$OPTARG";;
+        lift-boot)              LIFT_BOOT="$OPTARG";;
+        lb)                     LIFT_BOOT="$OPTARG";;
+        lift-boot-pattern)      LIFT_BOOT_PATTERN="$OPTARG";;
+        lbp)                    LIFT_BOOT_PATTERN="$OPTARG";;
+        lift-html5-snippet)     LIFT_HTML5_SNIPPET="$OPTARG";;
+        lhs)                    LIFT_HTML5_SNIPPET="$OPTARG";;
+        lift-properties)        LIFT_PROPERTIES="$OPTARG";;
+        lp)                     LIFT_PROPERTIES="$OPTARG";;
+        project-org)            PROJECT_ORGANIZATION="$OPTARG";;
+        po)                     PROJECT_ORGANIZATION="$OPTARG";;
+        project-name)           PROJECT_NAME="$OPTARG";;
+        pn)                     PROJECT_NAME="$OPTARG";;
+        sbt-version)            SBT_VERSION="$OPTARG";;
+        sv)                     SBT_VERSION="$OPTARG";;
+        project-version)        PROJECT_VERSION="$OPTARG";;
+        pv)                     PROJECT_VERSION="$OPTARG";;
+        def-scala-version)      DEF_SCALA_VERSION="$OPTARG";;
+        dsv)                    DEF_SCALA_VERSION="$OPTARG";;
+        build-scala-versions)   BUILD_SCALA_VERSIONS="$OPTARG";;
+        bsv)                    BUILD_SCALA_VERSIONS="$OPTARG";;
+        project-initialize)     PROJECT_INITIALIZE="$OPTARG";;
+        pi)                     PROJECT_INITIALIZE="$OPTARG";;
+        lift-version)           LIFT_VERSION="$OPTARG";;
+        lv)                     LIFT_VERSION="$OPTARG";;
+        [?]) printErrorHelpAndExit "$badOptionHelp";;
+    esac
+done
 
 echo "Building with:"
 echo "GITER8:               $GITER8"
@@ -122,11 +125,13 @@ if [ -d "$TARGET" ]; then
         # Symbolic link specific commands go here
         #rm "$TARGET"
         echo "$TARGET exists.  It's a symlink.  Please remove it, rename it, or change your TARGET name."
+        echo "Aborting..."
     else
         # Target dir exists and is a directory.
         # Directory command goes here
         #rmdir "$TARGET"
         echo "$TARGET exists.  It's a directory.  Please remove it, rename it, or change your TARGET name."
+        echo "Aborting..."
     fi
 else
     # Target dir does not exist, proceed with build:
@@ -142,13 +147,13 @@ else
     sed -i "/$LIFT_BOOT_PATTERN/r $LIFT_HTML5_SNIPPET" $LIFT_BOOT
     
     # update build.properties
-    sed -i "s/$DEFAULT_PROJECT_ORGANIZATION=.*/$PROJECT_ORGANIZATION" $LIFT_PROPERTIES
-    sed -i "s/$DEFAULT_PROJECT_NAME=.*/$PROJECT_NAME" $LIFT_PROPERTIES
-    sed -i "s/$DEFAULT_SBT_VERSION=.*/$SBT_VERSION" $LIFT_PROPERTIES
-    sed -i "s/$DEFAULT_PROJECT_VERSION=.*/$PROJECT_VERSION" $LIFT_PROPERTIES
-    sed -i "s/$DEFAULT_DEF_SCALA_VERSION=.*/$DEF_SCALA_VERSION" $LIFT_PROPERTIES
-    sed -i "s/$DEFAULT_BUILD_SCALA_VERSIONS=.*/$BUILD_SCALA_VERSIONS" $LIFT_PROPERTIES
-    sed -i "s/$DEFAULT_PROJECT_INITIALIZE=.*/$PROJECT_INITIALIZE" $LIFT_PROPERTIES
-    sed -i "s/$DEFAULT_LIFT_VERSION=.*/$LIFT_VERSION" $LIFT_PROPERTIES
+    sed -i "s/$DEFAULT_PROJECT_ORGANIZATION=.*/$DEFAULT_PROJECT_ORGANIZATION=$PROJECT_ORGANIZATION/" $LIFT_PROPERTIES
+    sed -i "s/$DEFAULT_PROJECT_NAME=.*/$DEFAULT_PROJECT_NAME=$PROJECT_NAME/" $LIFT_PROPERTIES
+    sed -i "s/$DEFAULT_SBT_VERSION=.*/$DEFAULT_SBT_VERSION=$SBT_VERSION/" $LIFT_PROPERTIES
+    sed -i "s/$DEFAULT_PROJECT_VERSION=.*/$DEFAULT_PROJECT_VERSION=$PROJECT_VERSION/" $LIFT_PROPERTIES
+    sed -i "s/$DEFAULT_DEF_SCALA_VERSION=.*/$DEFAULT_DEF_SCALA_VERSION=$DEF_SCALA_VERSION/" $LIFT_PROPERTIES
+    sed -i "s/$DEFAULT_BUILD_SCALA_VERSIONS=.*/$DEFAULT_BUILD_SCALA_VERSIONS=$BUILD_SCALA_VERSIONS/" $LIFT_PROPERTIES
+    sed -i "s/$DEFAULT_PROJECT_INITIALIZE=.*/$DEFAULT_PROJECT_INITIALIZE=$PROJECT_INITIALIZE/" $LIFT_PROPERTIES
+    sed -i "s/$DEFAULT_LIFT_VERSION=.*/$DEFAULT_LIFT_VERSION=$LIFT_VERSION/" $LIFT_PROPERTIES
 
 fi

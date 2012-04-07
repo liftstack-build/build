@@ -26,18 +26,27 @@ GITER8="./giter8-default"
 LIFT="./lift_blank"
 HELPERS="./lift-helpers"
 TARGET="./lift24-s29-blank.g8"
+LIFT_BOOT="$TARGET/src/main/g8/src/main/scala/bootstrap/liftweb/Boot.scala"
+LIFT_BOOT_PATTERN="def boot {"
+LIFT_HTML5_SNIPPET="./html5-boot.scala"
 
 # Commandline param overide
 if [ $1 ]; then GITER8=$1; fi
 if [ $2 ]; then LIFT=$2; fi
 if [ $3 ]; then HELPERS=$3; fi
 if [ $4 ]; then TARGET=$4; fi
+if [ $5 ]; then LIFT_BOOT=$5; fi
+if [ $6 ]; then LIFT_BOOT_PATTERN=$6; fi
+if [ $7 ]; then LIFT_HTML5_SNIPPET=$7; fi
 
 echo "Building with:"
-echo "GITER8:   $GITER8"
-echo "LIFT:     $LIFT"     
-echo "HELPERS:  $HELPERS" 
-echo "TARGET:   $TARGET" 
+echo "GITER8:               $GITER8"
+echo "LIFT:                 $LIFT"     
+echo "HELPERS:              $HELPERS" 
+echo "TARGET:               $TARGET" 
+echo "LIFT_BOOT:            $LIFT_BOOT" 
+echo "LIFT_BOOT_PATTERN:    $LIFT_BOOT_PATTERN"
+echo "LIFT_HTML5_SNIPPET:   $LIFT_HTML5_SNIPPET"
 
 if [ -d "$TARGET" ]; then 
     if [ -L "$TARGET" ]; then
@@ -57,5 +66,14 @@ else
     cp -r $GITER8/* $TARGET
     rm -rf $TARGET/src/main/g8/src/*
     cp -r $LIFT/src/* $TARGET/src/main/g8/src
-    cp -r $LIFT/project/* $TARGET/project
+    cp -r $LIFT/project/ $TARGET/src/main/g8/project
+    cp -r $HELPERS/README.md $TARGET
+    cp -r $HELPERS/.gitignore $TARGET
+
+    # insert html5 enabler into Boot.scala
+    sed -i "/$LIFT_BOOT_PATTERN/r $LIFT_HTML5_SNIPPET" $LIFT_BOOT
+    
+    # update build.properties to sbt 0.11.x and Scala 2.9.x
+    #sed -e '/$LIFT_BOOT_PATTERN/r $LIFT_HTML5_SNIPPET' $LIFT_BOOT
+    #sed -e '/$LIFT_BOOT_PATTERN/r $LIFT_HTML5_SNIPPET' $LIFT_BOOT
 fi

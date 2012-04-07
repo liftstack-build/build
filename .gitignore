@@ -7,6 +7,7 @@
 
 # # ignore all lift template directories.  they are their own repo's.  this repo only for scripts for making giter8 templates, README, etc.
 lift*
+test
 
 # new and old versions of conffiles, stored by dpkg
 *.dpkg-*

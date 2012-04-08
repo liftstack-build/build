@@ -4,6 +4,10 @@
 
 - Helper scripts for creating and managing Lift giter8 templates
 
+[build-lift-g8-template.sh][0]
+
+- Bash script for building Lift g8 templates.  Takes a Lift [sbt project directory][13] and wraps it in a [standard g8 template][14], with optional config parameters.
+
 [lift24-s29-blank.g8][1]
 
 - blank template for Lift 2.4 and Scala 2.9.x, configured for [html5 template parsing instead of default xhtml][12]
@@ -49,3 +53,5 @@
 [10]: http://twitter.github.com/bootstrap/
 [11]: http://ajkochanowicz.github.com/Kickstrap/
 [12]: http://www.assembla.com/spaces/liftweb/wiki/HtmlProperties_XHTML_and_HTML5
+[13]: https://github.com/lift/lift_24_sbt
+[14]: https://github.com/n8han/giter8#readme

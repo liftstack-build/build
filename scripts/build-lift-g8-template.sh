@@ -9,6 +9,8 @@
 
 # Usage:
 # sh build-lift-giter8-project.sh
+# assumes giter8-default/, lift-helpers/, and lift_blank/ (or lift_basic/, lift_mvc/, 
+#   or other lift_[sbt-template]) in same directory.
 # use commandline params below to override defaults
 
 # Components:

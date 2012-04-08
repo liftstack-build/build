@@ -1,0 +1,1 @@
+seq( Lifty.liftySettings : _*)

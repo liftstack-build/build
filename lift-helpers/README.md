@@ -3,12 +3,12 @@
 ### Quick Start:
 
 1.  Install [Java SDK][1] or [OpenJDK][0].
-2.  Install the [Typesafe Stack][8] (Scala, sbt, sbt-extras, giter8) \*
+2.  Install the [Typesafe Stack][8] (Scala, [sbt][3], [sbt-extras][5], [giter8][4]) \*
 3.  Install Lift and this template using giter8, run it with sbt and lifty:
 
 <div></div>
 
-    g8 lift-stack/lift24-s29-blank
+    g8 lift-stack/lift24-s29-blank (or see [list of available Lift project templates][7])
     cd lift24-s29-blank (or whatever project name you choose from previous step)
     sbt
     lift jetty-run
@@ -36,10 +36,10 @@ Lift will be running on localhost:9000.
 [0]:  http://openjdk.java.net/install/
 [1]:  http://oracle.com/java 
 [2]:  http://www.scala-lang.org/downloads 
-[3]:  https://github.com/harrah/xsbt/ 
-[4]:  https://github.com/n8han/giter8 
-[5]:  https://github.com/paulp/sbt-extras
-[6]:  https://github.com/Lifty/lifty 
-
+[3]:  http://github.com/harrah/xsbt/ 
+[4]:  http://github.com/n8han/giter8 
+[5]:  http://github.com/paulp/sbt-extras
+[6]:  http://github.com/Lifty/lifty 
+[7]:  http://github.com/lift-stack/giter8-templates
 [8]:  http://typesafe.com/stack/download 
 

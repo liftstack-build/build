@@ -142,7 +142,7 @@ else
     cp -r $GITER8/* $TARGET
     rm -rf $TARGET/src/main/g8/src/*
     cp -r $LIFT/src/* $TARGET/src/main/g8/src
-    cp -r $LIFT/project/ $TARGET/src/main/g8/project
+    cp -r $LIFT/project/ $TARGET/src/main/g8/
     cp -r $HELPERS/README.md $TARGET
     cp -r $HELPERS/.gitignore $TARGET
 
@@ -158,5 +158,12 @@ else
     sed -i "s/$DEFAULT_BUILD_SCALA_VERSIONS=.*/$DEFAULT_BUILD_SCALA_VERSIONS=$BUILD_SCALA_VERSIONS/" $LIFT_PROPERTIES
     sed -i "s/$DEFAULT_PROJECT_INITIALIZE=.*/$DEFAULT_PROJECT_INITIALIZE=$PROJECT_INITIALIZE/" $LIFT_PROPERTIES
     sed -i "s/$DEFAULT_LIFT_VERSION=.*/$DEFAULT_LIFT_VERSION=$LIFT_VERSION/" $LIFT_PROPERTIES
+
+
+    # add Lifty to $TARGET/build.sbt
+    
+    # add Lifty to 
+    # resolvers += Resolver.url("sbt-plugin-releases", new URL("http://scalasbt.artifactoryonline.com/scalasbt/sbt-plugin-releases/"))(Resolver.ivyStylePatterns)
+    # addSbtPlugin("org.lifty" % "lifty" % "1.7.4")
 
 fi

@@ -11,7 +11,7 @@
     g8 lift-stack/lift24-s29-blank (or see [list of available Lift project templates][7])
     cd lift24-s29-blank (or whatever project name you choose from previous step)
     sbt
-    lift jetty-run
+    lifty jetty-run
 
 Lift will be running on localhost:9000.
     

@@ -181,10 +181,14 @@ else
     sed -i "s/$DEFAULT_PROJECT_INITIALIZE=.*/$DEFAULT_PROJECT_INITIALIZE=$PROJECT_INITIALIZE/" $LIFT_PROPERTIES
     sed -i "s/$DEFAULT_LIFT_VERSION=.*/$DEFAULT_LIFT_VERSION=$LIFT_VERSION/" $LIFT_PROPERTIES
 
+    #################################################
+    # add Lifty plugin to Lift project sbt          #
+    # append $LIFTY_SBT_BUILD to $LIFT_SBT_BUILD    #
+    # append $LIFTY_SBT_PLUGIN to $LIFT_SBT_PLUGINS #
+    #################################################
+    sed -i "$a $LIFTY_SBT_BUILD" $LIFT_SBT_BUILD
+    sed -i "$a $LIFTY_SBT_PLUGIN" $LIFT_SBT_PLUGINS
+    #################################################
 
-    # append $LIFTY_SBT_BUILD to $LIFT_SBT_BUILD
-     
-    
-    # append $LIFTY_SBT_PLUGIN to $LIFT_SBT_PLUGINS
 
 fi

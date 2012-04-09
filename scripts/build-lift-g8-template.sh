@@ -29,15 +29,21 @@
 # 5.  use sed to modify several config files
 
 # Default params
-GITER8="./giter8-default"                   #-g8-loc; -gl
-LIFT="./lift_blank"                         #-lift-loc; -ll
-HELPERS="./lift-helpers"                    #-helpers-loc; -hl
-TARGET="./lift24-s29-blank.g8"              #-target-loc; -tl
+GITER8="./giter8-default"                               #-g8-loc; -gl
+LIFT="./lift_blank"                                     #-lift-loc; -ll
+HELPERS="./lift-helpers"                                #-helpers-loc; -hl
+TARGET="./lift24-s29-blank.g8"                          #-target-loc; -tl
+TARGET_BUILD="$TARGET/src/main/g8"                      #-target-build; -tb
 LIFT_BOOT="$TARGET/src/main/g8/src/main/scala/bootstrap/liftweb/Boot.scala"     #lift-boot; -lb
-LIFT_BOOT_PATTERN="def boot {"              #-lift-boot-pattern; -lbp
-LIFT_HTML5_SNIPPET="$HELPERS/html5-boot.scala" #-lift-html5-snippet; -lhs
+LIFT_BOOT_PATTERN="def boot {"                          #-lift-boot-pattern; -lbp
+LIFT_HTML5_SNIPPET="$HELPERS/html5-boot.scala"          #-lift-html5-snippet; -lhs
+LIFT_SBT_BUILD="$TARGET_BUILD/build.sbt"                #-lift-build-sbt; -lbs
+LIFT_SBT_PLUGINS="$TARGET_BUILD/project/plugins.sbt"    #-lift-plugins-sbt; -lps
+LIFTY_SBT_BUILD="$HELPERS/lifty-build.sbt"              #-lifty-build-sbt; -lybs
+LIFTY_SBT_PLUGINS="$HELPERS/lifty-plugins.sbt"          #-lifty-plugins-sbt; -lyps
 
-# Lift properties config file
+
+# Lift properties config file keys
 DEFAULT_LIFT_PROPERTIES="$TARGET/src/main/g8/project/build.properties"
 DEFAULT_PROJECT_ORGANIZATION="project.organization"
 DEFAULT_PROJECT_NAME="project.name"
@@ -48,21 +54,22 @@ DEFAULT_BUILD_SCALA_VERSIONS="build.scala.versions"
 DEFAULT_PROJECT_INITIALIZE="project.initialize"
 DEFAULT_LIFT_VERSION="lift.version"
 
-# Lift properties default values
-LIFT_PROPERTIES="$DEFAULT_LIFT_PROPERTIES"  #-lift-properties; -lp
-PROJECT_ORGANIZATION="Lift"                 #-project-org; -po
-PROJECT_NAME="Lift SBT Template"            #-project-name; -pn
-SBT_VERSION="0.11.2"                        #-sbt-version; -sv
-PROJECT_VERSION="0.1"                       #-project-version; -pv
-DEF_SCALA_VERSION="2.9.0-1"                 #-def-scala-version; -dsv
-BUILD_SCALA_VERSIONS="2.9.0-1"              #-build-scala-versions; -bsv
-PROJECT_INITIALIZE="false"                  #-project-initialize; -pi
-LIFT_VERSION="2.4"                          #-lift-version; -lv
+# Lift properties config file values (defaults) 
+LIFT_PROPERTIES="$DEFAULT_LIFT_PROPERTIES"      #-lift-properties; -lp
+PROJECT_ORGANIZATION="Lift"                     #-project-org; -po
+PROJECT_NAME="Lift SBT Template"                #-project-name; -pn
+SBT_VERSION="0.11.2"                            #-sbt-version; -sv
+PROJECT_VERSION="0.1"                           #-project-version; -pv
+DEF_SCALA_VERSION="2.9.0-1"                     #-def-scala-version; -dsv
+BUILD_SCALA_VERSIONS="2.9.0-1"                  #-build-scala-versions; -bsv
+PROJECT_INITIALIZE="false"                      #-project-initialize; -pi
+LIFT_VERSION="2.4"                              #-lift-version; -lv
 
 # override above vars with any passed commandline opts (getops can't parse GNU style \
 # -- long options, so both long and short denoted by single - )
-while getopts "g8-loc:gl:lift-loc:ll:helpers-loc:hl:target-loc:tl:lift-boot:lb:\
-    lift-boot-pattern:lbp:lift-html5-snippet:lhs:project-org:po:project-name:pn:\
+while getopts "g8-loc:gl:lift-loc:ll:helpers-loc:hl:target-loc:tl:target-build:tb:\
+    lift-boot:lb:lift-boot-pattern:lbp:lift-html5-snippet:lhs:lift-properties:lp:\
+    lift-sbt-build:lsb:lift-sbt-plugins:lsp:project-org:po:project-name:pn:\
     sbt-version:sv:project-version:pv:def-scala-version:dsv:build-scala-versions:\
     bsv:project-initialize:pi:lift-version:lv" optionName; do
     case "$optionName" in 
@@ -74,6 +81,8 @@ while getopts "g8-loc:gl:lift-loc:ll:helpers-loc:hl:target-loc:tl:lift-boot:lb:\
         hl)                     HELPERS="$OPTARG";;
         target-loc)             TARGET="$OPTARG";;
         tl)                     TARGET="$OPTARG";;
+        target-build)           TARGET_BUILD="OPTARG";;
+        tb)                     TARGET_BUILD="OPTARG";;
         lift-boot)              LIFT_BOOT="$OPTARG";;
         lb)                     LIFT_BOOT="$OPTARG";;
         lift-boot-pattern)      LIFT_BOOT_PATTERN="$OPTARG";;
@@ -82,6 +91,14 @@ while getopts "g8-loc:gl:lift-loc:ll:helpers-loc:hl:target-loc:tl:lift-boot:lb:\
         lhs)                    LIFT_HTML5_SNIPPET="$OPTARG";;
         lift-properties)        LIFT_PROPERTIES="$OPTARG";;
         lp)                     LIFT_PROPERTIES="$OPTARG";;
+        lift-sbt-build)         LIFT_SBT_BUILD="$OPTARG";;
+        lsb)                    LIFT_SBT_BUILD="$OPTARG";;
+        lift-sbt-plugins)       LIFT_SBT_PLUGINS="$OPTARG";;
+        lsp)                    LIFT_SBT_PLUGINS="$OPTARG";;
+        lifty-build-sbt)        LIFTY_SBT_BUILD="$HELPERS/lifty-build.sbt";;
+        lybs)                   LIFTY_SBT_BUILD="$HELPERS/lifty-build.sbt";;
+        lifty-plugins-sbt)      LIFTY_SBT_PLUGINS="$HELPERS/lifty-plugins.sbt";;
+        lyps)                   LIFTY_SBT_PLUGINS="$HELPERS/lifty-plugins.sbt";;
         project-org)            PROJECT_ORGANIZATION="$OPTARG";;
         po)                     PROJECT_ORGANIZATION="$OPTARG";;
         project-name)           PROJECT_NAME="$OPTARG";;
@@ -107,6 +124,7 @@ echo "GITER8:               $GITER8"
 echo "LIFT:                 $LIFT"     
 echo "HELPERS:              $HELPERS" 
 echo "TARGET:               $TARGET" 
+echo "TARGET_BUILD:         $TARGET_BUILD"
 echo "LIFT_BOOT:            $LIFT_BOOT" 
 echo "LIFT_BOOT_PATTERN:    $LIFT_BOOT_PATTERN"
 echo "LIFT_HTML5_SNIPPET:   $LIFT_HTML5_SNIPPET"
@@ -119,6 +137,10 @@ echo "DEF_SCALA_VERSION:    $DEF_SCALA_VERSION"
 echo "BUILD_SCALA_VERSIONS: $BUILD_SCALA_VERSIONS"
 echo "PROJECT_INITIALIZE:   $PROJECT_INITIALIZE"
 echo "LIFT_VERSION:         $LIFT_VERSION"
+echo "LIFT_SBT_BUILD:       $LIFT_SBT_BUILD"
+echo "LIFT_SBT_PLUGINS:     $LIFT_SBT_PLUGINS"
+echo "LIFTY_SBT_BUILD:      $LIFTY_SBT_BUILD"
+echo "LIFTY_SBT_PLUGINS:    $LIFTY_SBT_PLUGINS"
 
 
 # Main
@@ -160,10 +182,9 @@ else
     sed -i "s/$DEFAULT_LIFT_VERSION=.*/$DEFAULT_LIFT_VERSION=$LIFT_VERSION/" $LIFT_PROPERTIES
 
 
-    # add Lifty to $TARGET/build.sbt
+    # append $LIFTY_SBT_BUILD to $LIFT_SBT_BUILD
+     
     
-    # add Lifty to 
-    # resolvers += Resolver.url("sbt-plugin-releases", new URL("http://scalasbt.artifactoryonline.com/scalasbt/sbt-plugin-releases/"))(Resolver.ivyStylePatterns)
-    # addSbtPlugin("org.lifty" % "lifty" % "1.7.4")
+    # append $LIFTY_SBT_PLUGIN to $LIFT_SBT_PLUGINS
 
 fi

@@ -190,21 +190,21 @@ else
 
     #################################################################################### 
     # add Lifty plugin to Lift project sbt
-    
-    # append $LIFTY_SBT_BUILD to $LIFT_SBT_BUILD
-    if [ ! -d "$LIFT_SBT_BUILD" ]; then 
-        touch $LIFT_SBT_BUILD;
-    fi
-    #sed -i "$a $LIFTY_SBT_BUILD" $LIFT_SBT_BUILD
-    cat $LIFTY_SBT_BUILD >> $LIFT_SBT_BUILD
-    
-    
+   
     # append $LIFTY_SBT_PLUGIN to $LIFT_SBT_PLUGINS
     if [ ! -d "$LIFT_SBT_PLUGINS" ]; then 
         touch $LIFT_SBT_PLUGINS;
     fi
     #sed -i "$a $LIFTY_SBT_PLUGIN" $LIFT_SBT_PLUGINS
     cat $LIFTY_SBT_PLUGIN >> $LIFT_SBT_PLUGINS
+    
+    #### apparently not needed, lifty runs just fine in new projects without this  ####
+    # append $LIFTY_SBT_BUILD to $LIFT_SBT_BUILD
+    #if [ ! -d "$LIFT_SBT_BUILD" ]; then 
+    #    touch $LIFT_SBT_BUILD;
+    #fi
+    #sed -i "$a $LIFTY_SBT_BUILD" $LIFT_SBT_BUILD
+    #cat $LIFTY_SBT_BUILD >> $LIFT_SBT_BUILD
     #################################################################################### 
 
 fi

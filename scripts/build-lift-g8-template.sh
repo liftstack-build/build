@@ -30,7 +30,7 @@
 
 # Default params
 GITER8="./giter8-default"                               #-g8-loc; -gl
-LIFT="./submodules/lift-24-sbt/scala_29/lift_blank"     #-lift-loc; -ll
+LIFT="./submodules/lift_24_sbt/scala_29/lift_blank"     #-lift-loc; -ll
 HELPERS="./lift-helpers"                                #-helpers-loc; -hl
 TARGET="./lift24-s29-blank.g8"                          #-target-loc; -tl
 TARGET_GITBACKUP="$TARGET.gitbackup"                    #-target-gitbackup; -tgb
@@ -165,8 +165,8 @@ echo "LIFT_SBT_BUILD:           $LIFT_SBT_BUILD"
 echo "LIFT_SBT_PLUGINS:         $LIFT_SBT_PLUGINS"
 echo "LIFT_SBT_BUILD_SNIPPET:   $LIFT_SBT_BUILD_SNIPPET"
 echo "LIFT_SBT_PLUGIN_SNIPPET:  $LIFT_SBT_PLUGIN_SNIPPET"
-echo "LIFTY_SBT_BUILD_SNIPPET:  $LIFTY_SBT_BUILD"
-echo "LIFTY_SBT_PLUGIN_SNIPPET: $LIFTY_SBT_PLUGIN"
+echo "LIFTY_SBT_BUILD_SNIPPET:  $LIFTY_SBT_BUILD_SNIPPET"
+echo "LIFTY_SBT_PLUGIN_SNIPPET: $LIFTY_SBT_PLUGIN_SNIPPET"
 echo "MVC:                      $MVC"
 echo "HTML5BP:                  $HTML5BP"
 echo "BOOTSTRAP:                $BOOTSTRAP"
@@ -178,13 +178,13 @@ if [ -d "$TARGET" ]; then
         # Target dir exists and is a symlink.
         # Symbolic link specific commands go here
         #rm "$TARGET"
-        echo "$TARGET exists.  It's a symlink.  Please remove it, rename it, or change your TARGET name."
+        echo "$TARGET exists.  It's a symlink.  No override possible for data security.  Please manually remove it, rename it, or change your TARGET name."
         echo "Aborting..."
     else
         # Target dir exists and is a directory.
         # Directory command goes here
         #rmdir "$TARGET"
-        echo "$TARGET exists.  It's a directory.  Please remove it, rename it, or change your TARGET name."
+        echo "$TARGET exists.  It's a directory.  No override possible for data security.  Please remove it, rename it, or change your TARGET name."
         echo "Aborting..."
     fi
 else
@@ -234,7 +234,7 @@ else
     if [ ! -d "$LIFT_SBT_BUILD" ]; then 
         touch $LIFT_SBT_BUILD;
     fi
-    cat $LIFT_SBT_BUILD >> $LIFT_SBT_BUILD
+    cat $LIFT_SBT_BUILD_SNIPPET >> $LIFT_SBT_BUILD
     cat $LIFTY_SBT_BUILD_SNIPPET >> $LIFT_SBT_BUILD
 
     # inject html5 enabler snippet into Boot.scala after: def boot {

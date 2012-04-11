@@ -30,7 +30,7 @@
 
 # Default params
 GITER8="./giter8-default"                               #-g8-loc; -gl
-LIFT="./lift-24-sbt/scala_29/lift_blank"                #-lift-loc; -ll
+LIFT="./submodules/lift-24-sbt/scala_29/lift_blank"     #-lift-loc; -ll
 HELPERS="./lift-helpers"                                #-helpers-loc; -hl
 TARGET="./lift24-s29-blank.g8"                          #-target-loc; -tl
 TARGET_GITBACKUP="$TARGET.gitbackup"                    #-target-gitbackup; -tgb
@@ -40,8 +40,10 @@ LIFT_BOOT_PATTERN="def boot {"                          #-lift-boot-pattern; -lb
 LIFT_HTML5_SNIPPET="$HELPERS/html5-boot.scala"          #-lift-html5-snippet; -lhs
 LIFT_SBT_BUILD="$TARGET_BUILD/build.sbt"                #-lift-build-sbt; -lbs
 LIFT_SBT_PLUGINS="$TARGET_BUILD/project/plugins.sbt"    #-lift-plugins-sbt; -lps
-LIFTY_SBT_BUILD="$HELPERS/lifty-build.sbt"              #-lifty-build-sbt; -lybs
-LIFTY_SBT_PLUGIN="$HELPERS/lifty-plugins.sbt"           #-lifty-plugin-sbt; -lyps
+LIFT_SBT_BUILD_SNIPPET="$HELPERS/lift-build.sbt"        #-lift-build-sbt-snippet; -lbss
+LIFT_SBT_PLUGIN_SNIPPET="$HELPERS/lift-plugins.sbt"     #-lift-plugin-sbt-snippet; -lpss
+LIFTY_SBT_BUILD_SNIPPET="$HELPERS/lifty-build.sbt"      #-lifty-build-sbt-snippet; -lybss
+LIFTY_SBT_PLUGIN_SNIPPET="$HELPERS/lifty-plugins.sbt"   #-lifty-plugin-sbt-snippet; -lypss
 
 # 1=TRUE 0=FALSE (all false = lift24-s29-blank)
 MVC="0"                                                 #-mvc
@@ -80,89 +82,95 @@ while getopts "g8-loc:gl:lift-loc:ll:helpers-loc:hl:target-loc:tl:target-build:t
     sbt-version:sv:project-version:pv:def-scala-version:dsv:build-scala-versions:\
     bsv:project-initialize:pi:lift-version:lv" optionName; do
     case "$optionName" in 
-        g8-loc)                 GITER8="$OPTARG";;
-        gl)                     GITER8="$OPTARG";;
-        lift-loc)               LIFT="$OPTARG";;
-        ll)                     LIFT="$OPTARG";;
-        helpers-loc)            HELPERS="$OPTARG";;
-        hl)                     HELPERS="$OPTARG";;
-        target-loc)             TARGET="$OPTARG";;
-        tl)                     TARGET="$OPTARG";;
-        target-gitbackup)       TARGET_GITBACKUP="$OPTARG";;
-        tgb)                    TARGET_GITBACKUP="$OPTARG";;
-        target-build)           TARGET_BUILD="$OPTARG";;
-        tb)                     TARGET_BUILD="$OPTARG";;
-        lift-boot)              LIFT_BOOT="$OPTARG";;
-        lb)                     LIFT_BOOT="$OPTARG";;
-        lift-boot-pattern)      LIFT_BOOT_PATTERN="$OPTARG";;
-        lbp)                    LIFT_BOOT_PATTERN="$OPTARG";;
-        lift-html5-snippet)     LIFT_HTML5_SNIPPET="$OPTARG";;
-        lhs)                    LIFT_HTML5_SNIPPET="$OPTARG";;
-        lift-properties)        LIFT_PROPERTIES="$OPTARG";;
-        lp)                     LIFT_PROPERTIES="$OPTARG";;
-        lift-sbt-build)         LIFT_SBT_BUILD="$OPTARG";;
-        lsb)                    LIFT_SBT_BUILD="$OPTARG";;
-        lift-sbt-plugins)       LIFT_SBT_PLUGINS="$OPTARG";;
-        lsp)                    LIFT_SBT_PLUGINS="$OPTARG";;
-        lifty-sbt-build)        LIFTY_SBT_BUILD="$OPTARG";;
-        lysb)                   LIFTY_SBT_BUILD="$OPTARG";;
-        lifty-sbt-plugins)      LIFTY_SBT_PLUGIN="$OPTARG";;
-        lysp)                   LIFTY_SBT_PLUGIN="$OPTARG";;
-        mvc)                    MVC="0";;
-        html5bp)                HTML5BP="0";;
-        h5b)                    HTML5BP="0";;
-        bootstrap)              BOOTSTRAP="0";;
-        bs)                     BOOTSTRAP="0";;
-        kickstrap)              KICKSTRAP="0";;
-        ks)                     KICKSTRAP="0";;
-        project-org)            PROJECT_ORGANIZATION="$OPTARG";;
-        po)                     PROJECT_ORGANIZATION="$OPTARG";;
-        project-name)           PROJECT_NAME="$OPTARG";;
-        pn)                     PROJECT_NAME="$OPTARG";;
-        sbt-version)            SBT_VERSION="$OPTARG";;
-        sv)                     SBT_VERSION="$OPTARG";;
-        project-version)        PROJECT_VERSION="$OPTARG";;
-        pv)                     PROJECT_VERSION="$OPTARG";;
-        def-scala-version)      DEF_SCALA_VERSION="$OPTARG";;
-        dsv)                    DEF_SCALA_VERSION="$OPTARG";;
-        build-scala-versions)   BUILD_SCALA_VERSIONS="$OPTARG";;
-        bsv)                    BUILD_SCALA_VERSIONS="$OPTARG";;
-        project-initialize)     PROJECT_INITIALIZE="$OPTARG";;
-        pi)                     PROJECT_INITIALIZE="$OPTARG";;
-        lift-version)           LIFT_VERSION="$OPTARG";;
-        lv)                     LIFT_VERSION="$OPTARG";;
+        g8-loc)                     GITER8="$OPTARG";;
+        gl)                         GITER8="$OPTARG";;
+        lift-loc)                   LIFT="$OPTARG";;
+        ll)                         LIFT="$OPTARG";;
+        helpers-loc)                HELPERS="$OPTARG";;
+        hl)                         HELPERS="$OPTARG";;
+        target-loc)                 TARGET="$OPTARG";;
+        tl)                         TARGET="$OPTARG";;
+        target-gitbackup)           TARGET_GITBACKUP="$OPTARG";;
+        tgb)                        TARGET_GITBACKUP="$OPTARG";;
+        target-build)               TARGET_BUILD="$OPTARG";;
+        tb)                         TARGET_BUILD="$OPTARG";;
+        lift-boot)                  LIFT_BOOT="$OPTARG";;
+        lb)                         LIFT_BOOT="$OPTARG";;
+        lift-boot-pattern)          LIFT_BOOT_PATTERN="$OPTARG";;
+        lbp)                        LIFT_BOOT_PATTERN="$OPTARG";;
+        lift-html5-snippet)         LIFT_HTML5_SNIPPET="$OPTARG";;
+        lhs)                        LIFT_HTML5_SNIPPET="$OPTARG";;
+        lift-properties)            LIFT_PROPERTIES="$OPTARG";;
+        lp)                         LIFT_PROPERTIES="$OPTARG";;
+        lift-sbt-build)             LIFT_SBT_BUILD="$OPTARG";;
+        lsb)                        LIFT_SBT_BUILD="$OPTARG";;
+        lift-sbt-plugins)           LIFT_SBT_PLUGINS="$OPTARG";;
+        lsp)                        LIFT_SBT_PLUGINS="$OPTARG";;
+        lift-build-sbt-snippet)     LIFT_SBT_BUILD_SNIPPET="$OPTARG";;
+        lbss)                       LIFT_SBT_BUILD_SNIPPET="$OPTARG";;
+        lift-plugin-sbt-snippet)    LIFT_SBT_PLUGIN_SNIPPET="$OPTARG";;
+        lpss)                       LIFT_SBT_PLUGIN_SNIPPET="$OPTARG";;
+        lifty-sbt-build)            LIFTY_SBT_BUILD_SNIPPET="$OPTARG";;
+        lysb)                       LIFTY_SBT_BUILD_SNIPPET="$OPTARG";;
+        lifty-sbt-plugins)          LIFTY_SBT_PLUGIN_SNIPPET="$OPTARG";;
+        lysp)                       LIFTY_SBT_PLUGIN_SNIPPET="$OPTARG";;
+        mvc)                        MVC="0";;
+        html5bp)                    HTML5BP="0";;
+        h5b)                        HTML5BP="0";;
+        bootstrap)                  BOOTSTRAP="0";;
+        bs)                         BOOTSTRAP="0";;
+        kickstrap)                  KICKSTRAP="0";;
+        ks)                         KICKSTRAP="0";;
+        project-org)                PROJECT_ORGANIZATION="$OPTARG";;
+        po)                         PROJECT_ORGANIZATION="$OPTARG";;
+        project-name)               PROJECT_NAME="$OPTARG";;
+        pn)                         PROJECT_NAME="$OPTARG";;
+        sbt-version)                SBT_VERSION="$OPTARG";;
+        sv)                         SBT_VERSION="$OPTARG";;
+        project-version)            PROJECT_VERSION="$OPTARG";;
+        pv)                         PROJECT_VERSION="$OPTARG";;
+        def-scala-version)          DEF_SCALA_VERSION="$OPTARG";;
+        dsv)                        DEF_SCALA_VERSION="$OPTARG";;
+        build-scala-versions)       BUILD_SCALA_VERSIONS="$OPTARG";;
+        bsv)                        BUILD_SCALA_VERSIONS="$OPTARG";;
+        project-initialize)         PROJECT_INITIALIZE="$OPTARG";;
+        pi)                         PROJECT_INITIALIZE="$OPTARG";;
+        lift-version)               LIFT_VERSION="$OPTARG";;
+        lv)                         LIFT_VERSION="$OPTARG";;
         [?]) printErrorHelpAndExit "$badOptionHelp";;
     esac
 done
 
 # output build params; TODO: add last chance modify/abort option
 echo "Building with:"
-echo "GITER8:               $GITER8"
-echo "LIFT:                 $LIFT"     
-echo "HELPERS:              $HELPERS" 
-echo "TARGET:               $TARGET" 
-echo "TARGET_GITBACKUP:     $TARGET_GITBACKUP"
-echo "TARGET_BUILD:         $TARGET_BUILD"
-echo "LIFT_BOOT:            $LIFT_BOOT" 
-echo "LIFT_BOOT_PATTERN:    $LIFT_BOOT_PATTERN"
-echo "LIFT_HTML5_SNIPPET:   $LIFT_HTML5_SNIPPET"
-echo "LIFT_PROPERTIES:      $LIFT_PROPERTIES"
-echo "PROJECT_ORGANIZATION: $PROJECT_ORGANIZATION"
-echo "PROJECT_NAME:         $PROJECT_NAME"
-echo "SBT_VERSION:          $SBT_VERSION"
-echo "PROJECT_VERSION:      $PROJECT_VERSION"
-echo "DEF_SCALA_VERSION:    $DEF_SCALA_VERSION"
-echo "BUILD_SCALA_VERSIONS: $BUILD_SCALA_VERSIONS"
-echo "PROJECT_INITIALIZE:   $PROJECT_INITIALIZE"
-echo "LIFT_VERSION:         $LIFT_VERSION"
-echo "LIFT_SBT_BUILD:       $LIFT_SBT_BUILD"
-echo "LIFT_SBT_PLUGINS:     $LIFT_SBT_PLUGINS"
-echo "LIFTY_SBT_BUILD:      $LIFTY_SBT_BUILD"
-echo "LIFTY_SBT_PLUGIN:     $LIFTY_SBT_PLUGIN"
-echo "MVC:                  $MVC"
-echo "HTML5BP:              $HTML5BP"
-echo "BOOTSTRAP:            $BOOTSTRAP"
-echo "KICKSTRAP:            $KICKSTRAP"
+echo "GITER8:                   $GITER8"
+echo "LIFT:                     $LIFT"     
+echo "HELPERS:                  $HELPERS" 
+echo "TARGET:                   $TARGET" 
+echo "TARGET_GITBACKUP:         $TARGET_GITBACKUP"
+echo "TARGET_BUILD:             $TARGET_BUILD"
+echo "LIFT_BOOT:                $LIFT_BOOT" 
+echo "LIFT_BOOT_PATTERN:        $LIFT_BOOT_PATTERN"
+echo "LIFT_HTML5_SNIPPET:       $LIFT_HTML5_SNIPPET"
+echo "LIFT_PROPERTIES:          $LIFT_PROPERTIES"
+echo "PROJECT_ORGANIZATION:     $PROJECT_ORGANIZATION"
+echo "PROJECT_NAME:             $PROJECT_NAME"
+echo "SBT_VERSION:              $SBT_VERSION"
+echo "PROJECT_VERSION:          $PROJECT_VERSION"
+echo "DEF_SCALA_VERSION:        $DEF_SCALA_VERSION"
+echo "BUILD_SCALA_VERSIONS:     $BUILD_SCALA_VERSIONS"
+echo "PROJECT_INITIALIZE:       $PROJECT_INITIALIZE"
+echo "LIFT_VERSION:             $LIFT_VERSION"
+echo "LIFT_SBT_BUILD:           $LIFT_SBT_BUILD"
+echo "LIFT_SBT_PLUGINS:         $LIFT_SBT_PLUGINS"
+echo "LIFT_SBT_BUILD_SNIPPET:   $LIFT_SBT_BUILD_SNIPPET"
+echo "LIFT_SBT_PLUGIN_SNIPPET:  $LIFT_SBT_PLUGIN_SNIPPET"
+echo "LIFTY_SBT_BUILD_SNIPPET:  $LIFTY_SBT_BUILD"
+echo "LIFTY_SBT_PLUGIN_SNIPPET: $LIFTY_SBT_PLUGIN"
+echo "MVC:                      $MVC"
+echo "HTML5BP:                  $HTML5BP"
+echo "BOOTSTRAP:                $BOOTSTRAP"
+echo "KICKSTRAP:                $KICKSTRAP"
 
 # Main
 if [ -d "$TARGET" ]; then 
@@ -183,6 +191,28 @@ else
 
     # TODO: provide option to overwrite existing target dir - all files and folders except $TARGET/.git
     # TODO: make this whole section a transaction, don't commit if any part fails
+    
+    # View-first (default) or MVC?
+    # If MVC=0 (default)
+    #   IF html5bp + kickstrap
+    #       change $TARGET to ./lift24-s29-html5bp-kickstrap.g8
+    #   IF html5bp + bootstrap
+    #       change $TARGET to ./lift24-s29-html5bp-bootstrap.g8
+    #   IF html5bp only
+    #       change $TARGET to ./lift24-s29-html5bp.g8
+    #   IF mvc only
+    #       change $TARGET to ./lift24-s29-blank.g8
+    # Else:
+    #   set $LIFT to ./submodules/lift_24_sbt/scala29/lift_mvc
+    #   IF html5bp + kickstrap
+    #       change $TARGET to ./lift24-s29-mvc-html5bp-kickstrap.g8
+    #   IF html5bp + bootstrap
+    #       change $TARGET to ./lift24-s29-mvc-html5bp-bootstrap.g8
+    #   IF html5bp only
+    #       change $TARGET to ./lift24-s29-mvc-html5bp.g8
+    #   IF mvc only
+    #       change $TARGET to ./lift24-s29-mvc-blank.g8
+    
     # Target dir does not exist, proceed with build:
     mkdir -p $TARGET
     cp -r $GITER8/* $TARGET
@@ -192,6 +222,20 @@ else
     cp -r $HELPERS/README.md $TARGET
     cp -r $HELPERS/.gitignore $TARGET
     cp -r $TARGET_GITBACKUP/.git $TARGET
+
+    # add Lift and Lifty to $TARGET_BUILD/project/plugins.sbt
+    if [ ! -d "$LIFT_SBT_PLUGINS" ]; then 
+        touch $LIFT_SBT_PLUGINS;
+    fi
+    cat $LIFT_SBT_PLUGIN_SNIPPET >> $LIFT_SBT_PLUGINS
+    cat $LIFTY_SBT_PLUGIN_SNIPPET >> $LIFT_SBT_PLUGINS
+
+    # add Lift and Lifty to $TARGET_BUILD/build.sbt
+    if [ ! -d "$LIFT_SBT_BUILD" ]; then 
+        touch $LIFT_SBT_BUILD;
+    fi
+    cat $LIFT_SBT_BUILD >> $LIFT_SBT_BUILD
+    cat $LIFTY_SBT_BUILD_SNIPPET >> $LIFT_SBT_BUILD
 
     # inject html5 enabler snippet into Boot.scala after: def boot {
     sed -i "/$LIFT_BOOT_PATTERN/r $LIFT_HTML5_SNIPPET" $LIFT_BOOT
@@ -206,23 +250,6 @@ else
     sed -i "s/$DEFAULT_PROJECT_INITIALIZE=.*/$DEFAULT_PROJECT_INITIALIZE=$PROJECT_INITIALIZE/" $LIFT_PROPERTIES
     sed -i "s/$DEFAULT_LIFT_VERSION=.*/$DEFAULT_LIFT_VERSION=$LIFT_VERSION/" $LIFT_PROPERTIES
 
-    #################################################################################### 
-    # add Lifty plugin to Lift project sbt
-   
-    # append $LIFTY_SBT_PLUGIN to $LIFT_SBT_PLUGINS
-    if [ ! -d "$LIFT_SBT_PLUGINS" ]; then 
-        touch $LIFT_SBT_PLUGINS;
-    fi
-    #sed -i "$a $LIFTY_SBT_PLUGIN" $LIFT_SBT_PLUGINS
-    cat $LIFTY_SBT_PLUGIN >> $LIFT_SBT_PLUGINS
-    
-    #### apparently not needed, lifty runs just fine in new projects without this  ####
-    # append $LIFTY_SBT_BUILD to $LIFT_SBT_BUILD
-    #if [ ! -d "$LIFT_SBT_BUILD" ]; then 
-    #    touch $LIFT_SBT_BUILD;
-    #fi
-    #sed -i "$a $LIFTY_SBT_BUILD" $LIFT_SBT_BUILD
-    #cat $LIFTY_SBT_BUILD >> $LIFT_SBT_BUILD
-    #################################################################################### 
+    # html5bp!=0, bootstrap!=0, or kickstrap!=0, add component to $TARGET_BUILD
 
 fi

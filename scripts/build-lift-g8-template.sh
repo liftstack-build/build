@@ -30,7 +30,7 @@
 
 # Default params
 GITER8="./giter8-default"                               #-g8-loc; -gl
-LIFT="./lift_blank"                                     #-lift-loc; -ll
+LIFT="./lift-24-sbt/scala_29/lift_blank"                #-lift-loc; -ll
 HELPERS="./lift-helpers"                                #-helpers-loc; -hl
 TARGET="./lift24-s29-blank.g8"                          #-target-loc; -tl
 TARGET_GITBACKUP="$TARGET.gitbackup"                    #-target-gitbackup; -tgb
@@ -42,6 +42,12 @@ LIFT_SBT_BUILD="$TARGET_BUILD/build.sbt"                #-lift-build-sbt; -lbs
 LIFT_SBT_PLUGINS="$TARGET_BUILD/project/plugins.sbt"    #-lift-plugins-sbt; -lps
 LIFTY_SBT_BUILD="$HELPERS/lifty-build.sbt"              #-lifty-build-sbt; -lybs
 LIFTY_SBT_PLUGIN="$HELPERS/lifty-plugins.sbt"           #-lifty-plugin-sbt; -lyps
+
+# 1=TRUE 0=FALSE (all false = lift24-s29-blank)
+MVC="0"                                                 #-mvc
+HTML5BP="0"                                             #-html5bp; -h5b
+BOOTSTRAP="0"                                           #-bootstrap; -bs
+KICKSTRAP="0"                                           #-kickstrap; -ks
 
 # Lift properties config file keys
 DEFAULT_LIFT_PROPERTIES="$TARGET/src/main/g8/project/build.properties"
@@ -60,8 +66,8 @@ PROJECT_ORGANIZATION="Lift"                     #-project-org; -po
 PROJECT_NAME="Lift SBT Template"                #-project-name; -pn
 SBT_VERSION="0.11.2"                            #-sbt-version; -sv
 PROJECT_VERSION="0.0.0"                         #-project-version; -pv
-DEF_SCALA_VERSION="2.9.0-1"                     #-def-scala-version; -dsv
-BUILD_SCALA_VERSIONS="2.9.0-1"                  #-build-scala-versions; -bsv
+DEF_SCALA_VERSION="2.9.1"                       #-def-scala-version; -dsv
+BUILD_SCALA_VERSIONS="2.9.1"                    #-build-scala-versions; -bsv
 PROJECT_INITIALIZE="false"                      #-project-initialize; -pi
 LIFT_VERSION="2.4"                              #-lift-version; -lv
 
@@ -69,7 +75,8 @@ LIFT_VERSION="2.4"                              #-lift-version; -lv
 # -- long options, so both long and short denoted by single - )
 while getopts "g8-loc:gl:lift-loc:ll:helpers-loc:hl:target-loc:tl:target-build:tb:\
     lift-boot:lb:lift-boot-pattern:lbp:lift-html5-snippet:lhs:lift-properties:lp:\
-    lift-sbt-build:lsb:lift-sbt-plugins:lsp:project-org:po:project-name:pn:\
+    lift-sbt-build:lsb:lift-sbt-plugins:lsp:html5bp:h5b:bootstrap:bs:kickstrap:ks:\
+    mvn:project-org:po:project-name:pn:\
     sbt-version:sv:project-version:pv:def-scala-version:dsv:build-scala-versions:\
     bsv:project-initialize:pi:lift-version:lv" optionName; do
     case "$optionName" in 
@@ -101,6 +108,13 @@ while getopts "g8-loc:gl:lift-loc:ll:helpers-loc:hl:target-loc:tl:target-build:t
         lysb)                   LIFTY_SBT_BUILD="$OPTARG";;
         lifty-sbt-plugins)      LIFTY_SBT_PLUGIN="$OPTARG";;
         lysp)                   LIFTY_SBT_PLUGIN="$OPTARG";;
+        mvc)                    MVC="0";;
+        html5bp)                HTML5BP="0";;
+        h5b)                    HTML5BP="0";;
+        bootstrap)              BOOTSTRAP="0";;
+        bs)                     BOOTSTRAP="0";;
+        kickstrap)              KICKSTRAP="0";;
+        ks)                     KICKSTRAP="0";;
         project-org)            PROJECT_ORGANIZATION="$OPTARG";;
         po)                     PROJECT_ORGANIZATION="$OPTARG";;
         project-name)           PROJECT_NAME="$OPTARG";;
@@ -145,6 +159,10 @@ echo "LIFT_SBT_BUILD:       $LIFT_SBT_BUILD"
 echo "LIFT_SBT_PLUGINS:     $LIFT_SBT_PLUGINS"
 echo "LIFTY_SBT_BUILD:      $LIFTY_SBT_BUILD"
 echo "LIFTY_SBT_PLUGIN:     $LIFTY_SBT_PLUGIN"
+echo "MVC:                  $MVC"
+echo "HTML5BP:              $HTML5BP"
+echo "BOOTSTRAP:            $BOOTSTRAP"
+echo "KICKSTRAP:            $KICKSTRAP"
 
 # Main
 if [ -d "$TARGET" ]; then 

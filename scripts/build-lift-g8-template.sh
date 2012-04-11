@@ -1,32 +1,58 @@
 #!/usr/bin/env bash
 
-# build the giter8 lift template
+# Build the Lift giter8 templates.
 
 # Requires:
-# giter8 [1] installed and on your PATH.  Easy way get this is to use the Typesafe Stack [2].
-# [1]: http://github.com/n8han/giter8 
-# [2]: http://typesafe.com/stack/download
+#
+# 1.    giter8 [1] installed and on your PATH.  Easy way get this is to use the Typesafe Stack [2].
+#           [1]: http://github.com/n8han/giter8 
+#           [2]: http://typesafe.com/stack/download
+#
+# 2.    For the default configuration, the following directory structure must be in the working directory:
+# ./giter8-default                      # default giter8 project template, created by running 'g8 n8han/giter8'
+# ./lift-helpers                        # code snippets, readme's, etc for dynamic insertion into templates
+# ./scripts                             # this script and meta scripts for creating lift giter8 templates
+# ./submodules/bootstrap                # Twitter Bootstrap, via 'git submodule add -f git://github.com/twitter/bootstrap.git', for dynamic insertion into template
+# ./submodules/html5-boilerplate        # HTML Boilerplate, via 'git submodule add -f git://github.com/h5bp/html5-boilerplate.git', for dynamic insertion into template
+# ./submodules/kickstrap                # Kickstrap (Bootstrap fork), via 'git submodule add -f git://github.com/ajkochanowicz/Kickstrap.git', for dynamic insertion into template
+# ./submodules/lift_24_sbt              # Lift 2.4 project templates, for combination with giter8-default and other submodules
+                                        #   via https://github.com/lift-stack/lift_24_sbt
+# get all by cloning https://github.com/lift-stack/giter8-templates
 
 # Usage:
 # sh build-lift-giter8-project.sh
-# assumes giter8-default/, lift-helpers/, and lift_blank/ (or lift_basic/, lift_mvc/, 
-#   or other lift_[sbt-template]) in same directory.
-# use commandline params below to override defaults
+# use commandline params below to override defaults, 
+#   or use meta build scripts in ./scripts that call this script with cmdline params.
 
 # Components:
-# 1.  ./lift_blank (blank lift template using lift 2.4 and scala 2.9) [3] 
-# 2.  ./giter8 project template (created by running 'g8 n8han/giter8')
-# 3.  ./lift-helpers (.gitconfig, README.md)
+# 1.    Lift project template for Lift 2.4, Scala 2.9, modified for HTML5.  Several choices:
+#   ./submodules/lift_24_sbt/scala29/lift_blank_html5
+#   ./submodules/lift_24_sbt/scala29/lift_blank_html5bp
+#   ./submodules/lift_24_sbt/scala29/lift_blank_html5bp_bootstrap
+#   ./submodules/lift_24_sbt/scala29/lift_blank_html5bp_kickstrap
+#   ./submodules/lift_24_sbt/scala29/lift_mvc_html5
+#   ./submodules/lift_24_sbt/scala29/lift_mvc_html5bp
+#   ./submodules/lift_24_sbt/scala29/lift_mvc_html5bp_bootstrap
+#   ./submodules/lift_24_sbt/scala29/lift_mvc_html5bp_kickstrap
+# 2.    ./giter8 project template (created by running 'g8 n8han/giter8')
+# 3.    ./lift-helpers (.gitconfig, README.md)
 # [3]: https://github.com/lift/lift_24_sbt
 
 # Steps:
 # TLDR - copy giter8 project template to target dir, then copy lift components and helpers into it, modify config files
-# 0.  Test if target project directory exists:
+# 0.  Test if target project directory exists
 # 1.  copy giter8 template to new working directory ($TARGET)
-# 2.  copy lift blank template to $TARGET, but put lift/src in $TARGET]/src/main/g8/src and lift/project in $TARGET/src/main/g8/project
-# 3.  delete lift template's sbt* files from $TARGET/src/main/g8/ (will use sbt already installed on PATH instead)
+# 2.  copy lift blank template to $TARGET_BUILD (eg, put lift/src in $TARGET/src/main/g8/src and lift/project in $TARGET/src/main/g8/project)
+# 3.  delete lift template's sbt* files from $TARGET_BUILD (will use Typesafe Stack's sbt already installed on PATH instead)
 # 4.  copy .gitignore and README.md from helpers to $TARGET, overwriting current ones
-# 5.  use sed to modify several config files
+# 5.  modify config files to add HTML5, Lift, Lifty, etc.
+
+# Configuration params
+# 1=TRUE 0=FALSE (all false = lift24-s29-blank)
+MVC="0"                                                 #-mvc
+HTML5BP="0"                                             #-html5bp; -h5b
+BOOTSTRAP="0"                                           #-bootstrap; -bs
+KICKSTRAP="0"                                           #-kickstrap; -ks
 
 # Default params
 GITER8="./giter8-default"                               #-g8-loc; -gl
@@ -44,12 +70,6 @@ LIFT_SBT_BUILD_SNIPPET="$HELPERS/lift-build.sbt"        #-lift-build-sbt-snippet
 LIFT_SBT_PLUGIN_SNIPPET="$HELPERS/lift-plugins.sbt"     #-lift-plugin-sbt-snippet; -lpss
 LIFTY_SBT_BUILD_SNIPPET="$HELPERS/lifty-build.sbt"      #-lifty-build-sbt-snippet; -lybss
 LIFTY_SBT_PLUGIN_SNIPPET="$HELPERS/lifty-plugins.sbt"   #-lifty-plugin-sbt-snippet; -lypss
-
-# 1=TRUE 0=FALSE (all false = lift24-s29-blank)
-MVC="0"                                                 #-mvc
-HTML5BP="0"                                             #-html5bp; -h5b
-BOOTSTRAP="0"                                           #-bootstrap; -bs
-KICKSTRAP="0"                                           #-kickstrap; -ks
 
 # Lift properties config file keys
 DEFAULT_LIFT_PROPERTIES="$TARGET/src/main/g8/project/build.properties"
@@ -75,12 +95,14 @@ LIFT_VERSION="2.4"                              #-lift-version; -lv
 
 # override above vars with any passed commandline opts (getops can't parse GNU style \
 # -- long options, so both long and short denoted by single - )
-while getopts "g8-loc:gl:lift-loc:ll:helpers-loc:hl:target-loc:tl:target-build:tb:\
-    lift-boot:lb:lift-boot-pattern:lbp:lift-html5-snippet:lhs:lift-properties:lp:\
-    lift-sbt-build:lsb:lift-sbt-plugins:lsp:html5bp:h5b:bootstrap:bs:kickstrap:ks:\
-    mvn:project-org:po:project-name:pn:\
-    sbt-version:sv:project-version:pv:def-scala-version:dsv:build-scala-versions:\
-    bsv:project-initialize:pi:lift-version:lv" optionName; do
+while getopts "mvc:html5bp:h5b:bootstrap:bs:kickstrap:ks:g8-loc:gl:lift-loc:ll:\
+    helpers-loc:hl:target-loc:tl:target-gitbackup:tgb:target-build:tb:lift-boot:lb:\
+    lift-boot-pattern:lbp:lift-html5-snippet:lhs:lift-build-sbt:lbs:\
+    lift-plugins-sbt:lps:lift-build-sbt-snippet:lbss:lift-plugin-sbt-snippet:lpss:\
+    lifty-build-sbt-snippet:lybss:lifty-plugin-sbt-snippet:lypss:lift-properties:lp:\
+    project-org:po:project-name:pn:sbt-version:sv:project-version:pv:\
+    def-scala-version:dsv:build-scala-versions:bsv:project-initialize:pi:lift-version:lv"\
+    optionName; do
     case "$optionName" in 
         g8-loc)                     GITER8="$OPTARG";;
         gl)                         GITER8="$OPTARG";;

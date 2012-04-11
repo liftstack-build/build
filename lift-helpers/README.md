@@ -8,12 +8,13 @@
 
 <div></div>
 
+    cd ~/bin (or wherever you want giter8 to create your Lift project directory)
     g8 lift-stack/lift24-s29-blank (or see [list of available Lift project templates][7])
     cd lift24-s29-blank (or whatever project name you choose from previous step)
     sbt
-    lifty jetty-run
+    container:start
 
-Lift will be running on localhost:9000.
+Lift will be running on localhost:8080.  Try it out by [building a multiuser chap app in about 20 lines of code][9].
     
 \* *Multiple install options.  For \***nix users, if you choose to install Typesafe Stack via the Typesafe repo for your distro, a required dependency is OpenJDK.  If you already have Oracle Java installed and don't want to add OpenJDK to your system via package manager required dependency, your best bet is to use the last option on the download page - the Unversal Installer (just a zipped archive you put anywhere and add the bin directory to your PATH).*
 
@@ -42,4 +43,4 @@ Lift will be running on localhost:9000.
 [6]:  http://github.com/Lifty/lifty 
 [7]:  http://github.com/lift-stack/giter8-templates
 [8]:  http://typesafe.com/stack/download 
-
+[9]:  http://simply.liftweb.net/index-Chapter-2.html#toc-Chapter-2

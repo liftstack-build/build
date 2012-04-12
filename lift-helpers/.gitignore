@@ -7,7 +7,7 @@
 test
 lift
 !lifty*
-!lift-24-sbt
+!lift_24_sbt
 !lift-helpers
 
 # new and old versions of conffiles, stored by dpkg

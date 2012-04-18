@@ -1,6 +1,3 @@
-[submodule "submodules/lift_24_sbt"]
-	path = submodules/lift_24_sbt
-	url = git@github.com:lift-stack/lift_24_sbt.git
 [submodule "submodules/html5-boilerplate"]
 	path = submodules/html5-boilerplate
 	url = git@github.com:lift-stack/html5-boilerplate.git
@@ -10,3 +7,6 @@
 [submodule "submodules/bootstrap"]
 	path = submodules/bootstrap
 	url = git://github.com/twitter/bootstrap.git
+[submodule "submodules/lift_24_sbt"]
+	path = submodules/lift_24_sbt
+	url = git@github.com:lift-stack/lift_24_sbt.git

@@ -1,0 +1,1 @@
+scripts/build-lift-g8-blank.sh

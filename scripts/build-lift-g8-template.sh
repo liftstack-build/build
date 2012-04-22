@@ -25,18 +25,11 @@
 #   or use meta build scripts in ./scripts that call this script with cmdline params.
 
 # Components:
-# 1.    Lift project template for Lift 2.4, Scala 2.9, modified for HTML5.  Several choices:
-#   ./submodules/lift_24_sbt/scala29/lift_blank_html5
-#   ./submodules/lift_24_sbt/scala29/lift_blank_html5bp
-#   ./submodules/lift_24_sbt/scala29/lift_blank_html5bp_bootstrap
-#   ./submodules/lift_24_sbt/scala29/lift_blank_html5bp_kickstrap
-#   ./submodules/lift_24_sbt/scala29/lift_mvc_html5
-#   ./submodules/lift_24_sbt/scala29/lift_mvc_html5bp
-#   ./submodules/lift_24_sbt/scala29/lift_mvc_html5bp_bootstrap
-#   ./submodules/lift_24_sbt/scala29/lift_mvc_html5bp_kickstrap
-# 2.    ./giter8 project template (created by running 'g8 n8han/giter8')
-# 3.    ./lift-helpers (.gitconfig, README.md)
-# [3]: https://github.com/lift/lift_24_sbt
+# 1.  Lift project template for Lift 2.4, Scala 2.9, modified for HTML5.  
+#     ./submodules/lift_24_sbt [3]
+# 2.  ./giter8 project template (created by running 'g8 n8han/giter8')
+# 3.  ./lift-helpers (.gitconfig, README.md)
+# [3]: https://github.com/lift-stack/lift_24_sbt
 
 # Steps:
 # TLDR - copy giter8 project template to target dir, then copy lift components and helpers into it, modify config files
@@ -55,8 +48,8 @@ BOOTSTRAP="0"                                           #-bootstrap; -bs
 KICKSTRAP="0"                                           #-kickstrap; -ks
 
 # Default params
-GITER8="./giter8-default"                               #-g8-loc; -gl
-LIFT="./submodules/lift_24_sbt/scala_29/lift_blank"     #-lift-loc; -ll
+GITER8_TEMPLATE="./giter8-default"                      #-g8-loc; -gl
+LIFT="./submodules/lift_24_sbt"                         #-lift-loc; -ll
 HELPERS="./lift-helpers"                                #-helpers-loc; -hl
 TARGET="./lift24-s29-blank.g8"                          #-target-loc; -tl
 TARGET_GITBACKUP="$TARGET.gitbackup"                    #-target-gitbackup; -tgb
@@ -104,8 +97,8 @@ while getopts "mvc:html5bp:h5b:bootstrap:bs:kickstrap:ks:g8-loc:gl:lift-loc:ll:\
     def-scala-version:dsv:build-scala-versions:bsv:project-initialize:pi:lift-version:lv"\
     optionName; do
     case "$optionName" in 
-        g8-loc)                     GITER8="$OPTARG";;
-        gl)                         GITER8="$OPTARG";;
+        g8-loc)                     GITER8_TEMPLATE="$OPTARG";;
+        gl)                         GITER8_TEMPLATE="$OPTARG";;
         lift-loc)                   LIFT="$OPTARG";;
         ll)                         LIFT="$OPTARG";;
         helpers-loc)                HELPERS="$OPTARG";;
@@ -165,7 +158,7 @@ done
 
 # output build params; TODO: add last chance modify/abort option
 echo "Building with:"
-echo "GITER8:                   $GITER8"
+echo "GITER8_TEMPLATE:          $GITER8_TEMPLATE"
 echo "LIFT:                     $LIFT"     
 echo "HELPERS:                  $HELPERS" 
 echo "TARGET:                   $TARGET" 
@@ -237,7 +230,7 @@ else
     
     # Target dir does not exist, proceed with build:
     mkdir -p $TARGET
-    cp -r $GITER8/* $TARGET
+    cp -r $GITER8_TEMPLATE/* $TARGET
     rm -rf $TARGET/src/main/g8/src/*
     cp -r $LIFT/src/* $TARGET/src/main/g8/src
     cp -r $LIFT/project/ $TARGET/src/main/g8/

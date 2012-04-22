@@ -4,3 +4,4 @@ resolvers += Resolver.url("sbt-plugin-releases", new URL("http://scalasbt.artifa
 
 // More Lifty (directives must be separated by blank line)
 addSbtPlugin("org.lifty" % "lifty" % "1.7.4")
+

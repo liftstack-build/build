@@ -63,6 +63,7 @@ LIFT_SBT_BUILD_SNIPPET="$HELPERS/lift-build.sbt"        #-lift-build-sbt-snippet
 LIFT_SBT_PLUGIN_SNIPPET="$HELPERS/lift-plugins.sbt"     #-lift-plugin-sbt-snippet; -lpss
 LIFTY_SBT_BUILD_SNIPPET="$HELPERS/lifty-build.sbt"      #-lifty-build-sbt-snippet; -lybss
 LIFTY_SBT_PLUGIN_SNIPPET="$HELPERS/lifty-plugins.sbt"   #-lifty-plugin-sbt-snippet; -lypss
+LIFT_PROPERTIES_TEMPLATE="$HELPERS/build.properties"    #-lift-properties-template; -lpt
 
 # Lift properties config file keys
 DEFAULT_LIFT_PROPERTIES="$TARGET/src/main/g8/project/build.properties"
@@ -94,7 +95,8 @@ while getopts "mvc:html5bp:h5b:bootstrap:bs:kickstrap:ks:g8-loc:gl:lift-loc:ll:\
     lift-plugins-sbt:lps:lift-build-sbt-snippet:lbss:lift-plugin-sbt-snippet:lpss:\
     lifty-build-sbt-snippet:lybss:lifty-plugin-sbt-snippet:lypss:lift-properties:lp:\
     project-org:po:project-name:pn:sbt-version:sv:project-version:pv:\
-    def-scala-version:dsv:build-scala-versions:bsv:project-initialize:pi:lift-version:lv"\
+    def-scala-version:dsv:build-scala-versions:bsv:project-initialize:pi:lift-version:lv:
+    lift-properties-template:lpt"\
     optionName; do
     case "$optionName" in 
         g8-loc)                     GITER8_TEMPLATE="$OPTARG";;
@@ -152,40 +154,43 @@ while getopts "mvc:html5bp:h5b:bootstrap:bs:kickstrap:ks:g8-loc:gl:lift-loc:ll:\
         pi)                         PROJECT_INITIALIZE="$OPTARG";;
         lift-version)               LIFT_VERSION="$OPTARG";;
         lv)                         LIFT_VERSION="$OPTARG";;
+        lift-propteries-template)   LIFT_PROPERTIES_TEMPLAT="$OPTARG";;
+        lpt)                        LIFT_PROPERTIES_TEMPLAT="$OPTARG";;  
         [?]) printErrorHelpAndExit "$badOptionHelp";;
     esac
 done
 
 # output build params; TODO: add last chance modify/abort option
 echo "Building with:"
-echo "GITER8_TEMPLATE:          $GITER8_TEMPLATE"
-echo "LIFT:                     $LIFT"     
-echo "HELPERS:                  $HELPERS" 
-echo "TARGET:                   $TARGET" 
-echo "TARGET_GITBACKUP:         $TARGET_GITBACKUP"
-echo "TARGET_BUILD:             $TARGET_BUILD"
-echo "LIFT_BOOT:                $LIFT_BOOT" 
-echo "LIFT_BOOT_PATTERN:        $LIFT_BOOT_PATTERN"
-echo "LIFT_HTML5_SNIPPET:       $LIFT_HTML5_SNIPPET"
-echo "LIFT_PROPERTIES:          $LIFT_PROPERTIES"
-echo "PROJECT_ORGANIZATION:     $PROJECT_ORGANIZATION"
-echo "PROJECT_NAME:             $PROJECT_NAME"
-echo "SBT_VERSION:              $SBT_VERSION"
-echo "PROJECT_VERSION:          $PROJECT_VERSION"
-echo "DEF_SCALA_VERSION:        $DEF_SCALA_VERSION"
-echo "BUILD_SCALA_VERSIONS:     $BUILD_SCALA_VERSIONS"
-echo "PROJECT_INITIALIZE:       $PROJECT_INITIALIZE"
-echo "LIFT_VERSION:             $LIFT_VERSION"
-echo "LIFT_SBT_BUILD:           $LIFT_SBT_BUILD"
-echo "LIFT_SBT_PLUGINS:         $LIFT_SBT_PLUGINS"
-echo "LIFT_SBT_BUILD_SNIPPET:   $LIFT_SBT_BUILD_SNIPPET"
-echo "LIFT_SBT_PLUGIN_SNIPPET:  $LIFT_SBT_PLUGIN_SNIPPET"
-echo "LIFTY_SBT_BUILD_SNIPPET:  $LIFTY_SBT_BUILD_SNIPPET"
-echo "LIFTY_SBT_PLUGIN_SNIPPET: $LIFTY_SBT_PLUGIN_SNIPPET"
-echo "MVC:                      $MVC"
-echo "HTML5BP:                  $HTML5BP"
-echo "BOOTSTRAP:                $BOOTSTRAP"
-echo "KICKSTRAP:                $KICKSTRAP"
+echo "GITER8_TEMPLATE:              $GITER8_TEMPLATE"
+echo "LIFT:                         $LIFT"     
+echo "HELPERS:                      $HELPERS" 
+echo "TARGET:                       $TARGET" 
+echo "TARGET_GITBACKUP:             $TARGET_GITBACKUP"
+echo "TARGET_BUILD:                 $TARGET_BUILD"
+echo "LIFT_BOOT:                    $LIFT_BOOT" 
+echo "LIFT_BOOT_PATTERN:            $LIFT_BOOT_PATTERN"
+echo "LIFT_HTML5_SNIPPET:           $LIFT_HTML5_SNIPPET"
+echo "LIFT_PROPERTIES_TEMPLATE:     $LIFT_PROPERTIES_TEMPLATE"
+echo "LIFT_PROPERTIES:              $LIFT_PROPERTIES"
+echo "$DEFAULT_PROJECT_ORGANIZATION:        $PROJECT_ORGANIZATION"
+echo "$DEFAULT_PROJECT_NAME:                $PROJECT_NAME"
+echo "$DEFAULT_SBT_VERSION:                 $SBT_VERSION"
+echo "$DEFAULT_PROJECT_VERSION:             $PROJECT_VERSION"
+echo "$DEFAULT_DEF_SCALA_VERSION:           $DEF_SCALA_VERSION"
+echo "$DEFAULT_BUILD_SCALA_VERSIONS:        $BUILD_SCALA_VERSIONS"
+echo "$DEFAULT_PROJECT_INITIALIZE:          $PROJECT_INITIALIZE"
+echo "$DEFAULT_LIFT_VERSION:                $LIFT_VERSION"
+echo "LIFT_SBT_BUILD:               $LIFT_SBT_BUILD"
+echo "LIFT_SBT_PLUGINS:             $LIFT_SBT_PLUGINS"
+echo "LIFT_SBT_BUILD_SNIPPET:       $LIFT_SBT_BUILD_SNIPPET"
+echo "LIFT_SBT_PLUGIN_SNIPPET:      $LIFT_SBT_PLUGIN_SNIPPET"
+echo "LIFTY_SBT_BUILD_SNIPPET:      $LIFTY_SBT_BUILD_SNIPPET"
+echo "LIFTY_SBT_PLUGIN_SNIPPET:     $LIFTY_SBT_PLUGIN_SNIPPET"
+echo "MVC:                          $MVC"
+echo "HTML5BP:                      $HTML5BP"
+echo "BOOTSTRAP:                    $BOOTSTRAP"
+echo "KICKSTRAP:                    $KICKSTRAP"
 
 # Main
 if [ -d "$TARGET" ]; then 
@@ -193,13 +198,13 @@ if [ -d "$TARGET" ]; then
         # Target dir exists and is a symlink.
         # Symbolic link specific commands go here
         #rm "$TARGET"
-        echo "$TARGET exists.  It's a symlink.  No override possible for data security.  Please manually remove it, rename it, or change your TARGET name."
+        echo "$TARGET exists.  It's a symlink.  No overwrite possible for data security.  Please manually remove it, rename it, or change your TARGET name."
         echo "Aborting..."
     else
         # Target dir exists and is a directory.
         # Directory command goes here
         #rmdir "$TARGET"
-        echo "$TARGET exists.  It's a directory.  No override possible for data security.  Please remove it, rename it, or change your TARGET name."
+        echo "$TARGET exists.  It's a directory.  No overwrite possible for data security.  Please remove it, rename it, or change your TARGET name."
         echo "Aborting..."
     fi
 else
@@ -232,30 +237,46 @@ else
     mkdir -p $TARGET
     cp -r $GITER8_TEMPLATE/* $TARGET
     rm -rf $TARGET/src/main/g8/src/*
-    cp -r $LIFT/src/* $TARGET/src/main/g8/src
-    cp -r $LIFT/project/ $TARGET/src/main/g8/
+    cp -r $LIFT/* $TARGET/src/main/g8/
+    rm -rf $TARGET/src/main/g8/sbt*
+    #cp -r $LIFT/src/* $TARGET/src/main/g8/src
+    #cp -r $LIFT/project/ $TARGET/src/main/g8/
     cp -r $HELPERS/README.md $TARGET
+    [ ! -e $TARGET/.gitignore ] || rm -rf $TARGET/.gitignore
     cp -r $HELPERS/.gitignore $TARGET
     cp -r $TARGET_GITBACKUP/.git $TARGET
+    rm -rf $TARGET/vim~
+    rm -rf $TARGET/src/main/g8/vim~
+    rm -rf $TARGET/src/main/g8/project/vim~
+    rm -rf $TARGET/src/main/g8/src/main/scala/code/snippet/vim~
+    rm -rf $TARGET/src/main/g8/src/main/scala/bootstrap/liftweb/vim~
 
     # add Lift and Lifty to $TARGET_BUILD/project/plugins.sbt
-    if [ ! -d "$LIFT_SBT_PLUGINS" ]; then 
+    if [ ! -e "$LIFT_SBT_PLUGINS" ]; then 
         touch $LIFT_SBT_PLUGINS;
     fi
-    cat $LIFT_SBT_PLUGIN_SNIPPET >> $LIFT_SBT_PLUGINS
+    #cat $LIFT_SBT_PLUGIN_SNIPPET >> $LIFT_SBT_PLUGINS
     cat $LIFTY_SBT_PLUGIN_SNIPPET >> $LIFT_SBT_PLUGINS
 
     # add Lift and Lifty to $TARGET_BUILD/build.sbt
-    if [ ! -d "$LIFT_SBT_BUILD" ]; then 
+    if [ ! -e "$LIFT_SBT_BUILD" ]; then 
         touch $LIFT_SBT_BUILD;
     fi
-    cat $LIFT_SBT_BUILD_SNIPPET >> $LIFT_SBT_BUILD
-    cat $LIFTY_SBT_BUILD_SNIPPET >> $LIFT_SBT_BUILD
+    # not needed with lift template https://github.com/d6y/lift_24_sbt
+    #cat $LIFT_SBT_BUILD_SNIPPET >> $LIFT_SBT_BUILD
+    #cat $LIFTY_SBT_BUILD_SNIPPET >> $LIFT_SBT_BUILD
 
     # inject html5 enabler snippet into Boot.scala after: def boot {
-    sed -i "/$LIFT_BOOT_PATTERN/r $LIFT_HTML5_SNIPPET" $LIFT_BOOT
+    # not necessary with template https://github.com/d6y/lift_24_sbt
+    #sed -i "/$LIFT_BOOT_PATTERN/r $LIFT_HTML5_SNIPPET" $LIFT_BOOT
     
     # update Lift project build.properties
+    if [ -e "$LIFT_PROPERTIES" ]; then
+        rm -rf $LIFT_PROPERTIES;
+        cp $LIFT_PROPERTIES_TEMPLATE $LIFT_PROPERTIES;
+    else
+        cp $LIFT_PROPERTIES_TEMPLATE $LIFT_PROPERTIES;
+    fi
     sed -i "s/$DEFAULT_PROJECT_ORGANIZATION=.*/$DEFAULT_PROJECT_ORGANIZATION=$PROJECT_ORGANIZATION/" $LIFT_PROPERTIES
     sed -i "s/$DEFAULT_PROJECT_NAME=.*/$DEFAULT_PROJECT_NAME=$PROJECT_NAME/" $LIFT_PROPERTIES
     sed -i "s/$DEFAULT_SBT_VERSION=.*/$DEFAULT_SBT_VERSION=$SBT_VERSION/" $LIFT_PROPERTIES
@@ -264,7 +285,7 @@ else
     sed -i "s/$DEFAULT_BUILD_SCALA_VERSIONS=.*/$DEFAULT_BUILD_SCALA_VERSIONS=$BUILD_SCALA_VERSIONS/" $LIFT_PROPERTIES
     sed -i "s/$DEFAULT_PROJECT_INITIALIZE=.*/$DEFAULT_PROJECT_INITIALIZE=$PROJECT_INITIALIZE/" $LIFT_PROPERTIES
     sed -i "s/$DEFAULT_LIFT_VERSION=.*/$DEFAULT_LIFT_VERSION=$LIFT_VERSION/" $LIFT_PROPERTIES
-
+    
     # html5bp!=0, bootstrap!=0, or kickstrap!=0, add component to $TARGET_BUILD
 
 fi

@@ -3,7 +3,7 @@
 ### Quick Start:
 
 1.  Install [Java SDK][1] or [OpenJDK][0].
-2.  Install the [Typesafe Stack][8] (Scala, [sbt][3], [sbt-extras][5], [giter8][4]) \*
+2.  Install the [Typesafe Stack][8] (or separately Scala, [sbt][3], [sbt-extras][5], [giter8][4]) \*
 3.  Install Lift and this template using giter8, run it with sbt and lifty:
 
 <div></div>
@@ -12,6 +12,7 @@
     g8 lift-stack/lift24-s29-blank (or see [list of available Lift project templates][7])
     cd lift24-s29-blank (or whatever project name you choose from previous step)
     sbt
+    [optional] lifty learn lift https://raw.github.com/Lifty/lifty/master/lifty-recipe/lifty.json
     container:start
 
 Lift will be running on localhost:8080.  Try it out by [building a multiuser chap app in about 20 lines of code][9].

@@ -10,3 +10,6 @@
 [submodule "submodules/lift_24_sbt"]
 	path = submodules/lift_24_sbt
 	url = git@github.com:lift-stack/lift_24_sbt.git
+[submodule "submodules/gitbackup"]
+	path = submodules/gitbackup
+	url = git@github.com:lift-stack/gitbackup.git

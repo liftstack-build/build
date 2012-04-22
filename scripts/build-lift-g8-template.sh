@@ -51,8 +51,9 @@ KICKSTRAP="0"                                           #-kickstrap; -ks
 GITER8_TEMPLATE="./giter8-default"                      #-g8-loc; -gl
 LIFT="./submodules/lift_24_sbt"                         #-lift-loc; -ll
 HELPERS="./lift-helpers"                                #-helpers-loc; -hl
-TARGET="./lift24-s29-blank.g8"                          #-target-loc; -tl
-TARGET_GITBACKUP="$TARGET.gitbackup"                    #-target-gitbackup; -tgb
+TARGET="lift24-s29-blank.g8"                            #-target-loc; -tl
+GITBACKUP="./submodules/gitbackup"                      #-gitbackup; -gb
+TARGET_GITBACKUP="$GITBACKUP/.git.$TARGET"              #-target-gitbackup; -tgb
 TARGET_BUILD="$TARGET/src/main/g8"                      #-target-build; -tb
 LIFT_BOOT="$TARGET/src/main/g8/src/main/scala/bootstrap/liftweb/Boot.scala"     #lift-boot; -lb
 LIFT_BOOT_PATTERN="def boot {"                          #-lift-boot-pattern; -lbp
@@ -90,8 +91,8 @@ LIFT_VERSION="2.4"                              #-lift-version; -lv
 # override above vars with any passed commandline opts (getops can't parse GNU style \
 # -- long options, so both long and short denoted by single - )
 while getopts "mvc:html5bp:h5b:bootstrap:bs:kickstrap:ks:g8-loc:gl:lift-loc:ll:\
-    helpers-loc:hl:target-loc:tl:target-gitbackup:tgb:target-build:tb:lift-boot:lb:\
-    lift-boot-pattern:lbp:lift-html5-snippet:lhs:lift-build-sbt:lbs:\
+    helpers-loc:hl:target-loc:tl:gitbackup:gb:target-gitbackup:tgb:target-build:tb:\
+    lift-boot:lb:lift-boot-pattern:lbp:lift-html5-snippet:lhs:lift-build-sbt:lbs:\
     lift-plugins-sbt:lps:lift-build-sbt-snippet:lbss:lift-plugin-sbt-snippet:lpss:\
     lifty-build-sbt-snippet:lybss:lifty-plugin-sbt-snippet:lypss:lift-properties:lp:\
     project-org:po:project-name:pn:sbt-version:sv:project-version:pv:\
@@ -107,6 +108,8 @@ while getopts "mvc:html5bp:h5b:bootstrap:bs:kickstrap:ks:g8-loc:gl:lift-loc:ll:\
         hl)                         HELPERS="$OPTARG";;
         target-loc)                 TARGET="$OPTARG";;
         tl)                         TARGET="$OPTARG";;
+        gitbackup)                  GITBACKUP="$OPTARG";;
+        gb)                         GITBACKUP="$OPTARG";;
         target-gitbackup)           TARGET_GITBACKUP="$OPTARG";;
         tgb)                        TARGET_GITBACKUP="$OPTARG";;
         target-build)               TARGET_BUILD="$OPTARG";;
@@ -244,7 +247,7 @@ else
     cp -r $HELPERS/README.md $TARGET
     [ ! -e $TARGET/.gitignore ] || rm -rf $TARGET/.gitignore
     cp -r $HELPERS/.gitignore $TARGET
-    cp -r $TARGET_GITBACKUP/.git $TARGET
+    cp -r $TARGET_GITBACKUP/ $TARGET/.git
     rm -rf $TARGET/vim~
     rm -rf $TARGET/src/main/g8/vim~
     rm -rf $TARGET/src/main/g8/project/vim~

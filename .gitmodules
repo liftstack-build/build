@@ -13,3 +13,6 @@
 [submodule "submodules/gitbackup"]
 	path = submodules/gitbackup
 	url = git@github.com:lift-stack/gitbackup.git
+[submodule "submodules/giter8-default"]
+	path = submodules/giter8-default
+	url = git@github.com:lift-stack/giter8-default.git

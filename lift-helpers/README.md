@@ -4,19 +4,38 @@
 
 1.  Install [Java SDK][1] or [OpenJDK][0].
 2.  Install the [Typesafe Stack][8] (or separately Scala, [sbt][3], [sbt-extras][5], [giter8][4]) \*
-3.  Install Lift and this template using giter8, run it with sbt and lifty:
+3.  Install Lift and this template using giter8, run it with sbt:
 
 <div></div>
 
     cd ~/bin (or wherever you want giter8 to create your Lift project directory)
     g8 lift-stack/lift24-s29-blank (or see [list of available Lift project templates][7])
     cd lift24-s29-blank (or whatever project name you choose from previous step)
-    sbt
-    [optional] lifty learn lift https://raw.github.com/Lifty/lifty/master/lifty-recipe/lifty.json
-    container:start
+    sbt container:start "~ compile"
 
-Lift will be running on localhost:8080.  Try it out by [building a multiuser chap app in about 20 lines of code][9].
+Lift will be running on localhost:8080.  You can begin developing your project and SBT will automatically recompile
+it on the fly as you save changes to .scala files.  Try it out by [building a multiuser chap app in about 20 lines of code][9].
     
+### Explanation
+
+giter8 (g8) downloads this Lift project template from github.  The sbt commandline:
+
+1.  sbt =               starts sbt interactive mode.
+2.  container:start =   starts the Java Servlet container specified in the Lift build.sbt file, Jetty in this case.
+3.  "~ compile" =       directs sbt to [automatically recompile][10] when changes to .scala source files occur;
+                        (multi-word sbt params must be in quotes when directly following 'sbt', but not
+                        when run from sbt interactive prompt)
+
+To use [Lifty][6], split up the sbt command above and insert the Lifty directive as such:
+
+    cd ~/bin (or wherever you want giter8 to create your Lift project directory)
+    g8 lift-stack/lift24-s29-blank (or see [list of available Lift project templates][7])
+    cd lift24-s29-blank (or whatever project name you choose from previous step)
+    sbt 
+    lifty learn lift https://raw.github.com/Lifty/lifty/master/lifty-recipe/lifty.json
+    container:start 
+    ~ compile
+
 \* *Multiple install options.  For \***nix users, if you choose to install Typesafe Stack via the Typesafe repo for your distro, a required dependency is OpenJDK.  If you already have Oracle Java installed and don't want to add OpenJDK to your system via package manager required dependency, your best bet is to use the last option on the download page - the Unversal Installer (just a zipped archive you put anywhere and add the bin directory to your PATH).*
 
 ### Requires:
@@ -45,3 +64,5 @@ Lift will be running on localhost:8080.  Try it out by [building a multiuser cha
 [7]:  http://github.com/lift-stack/giter8-templates
 [8]:  http://typesafe.com/stack/download 
 [9]:  http://simply.liftweb.net/index-Chapter-2.html#toc-Chapter-2
+[10]: https://github.com/harrah/xsbt/wiki/Triggered-Execution
+

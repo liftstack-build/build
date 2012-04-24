@@ -48,7 +48,7 @@ BOOTSTRAP="0"                                           #-bootstrap; -bs
 KICKSTRAP="0"                                           #-kickstrap; -ks
 
 # Default params
-GITER8_TEMPLATE="./giter8-default"                      #-g8-loc; -gl
+GITER8_TEMPLATE="./submodules/giter8-default"           #-g8-loc; -gl
 LIFT="./submodules/lift_24_sbt"                         #-lift-loc; -ll
 HELPERS="./lift-helpers"                                #-helpers-loc; -hl
 TARGET="lift24-s29-blank.g8"                            #-target-loc; -tl

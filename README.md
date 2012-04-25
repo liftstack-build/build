@@ -40,15 +40,15 @@
 
 - MVC template for Lift 2.4 and Scala 2.9.x, plus [HTML5 Boilerplate][9], current stable [Kickstrap][11], and [configured for html5 template parsing instead of default xhtml][12]
 
-[0]: http://github.com/lift-stack/giter8-templates
-[1]: http://github.com/lift-stack/lift24-s29-blank.g8
-[2]: http://github.com/lift-stack/lift24-s29-html5bp.g8
-[3]: http://github.com/lift-stack/lift24-s29-html5bp-bootstrap.g8
-[4]: http://github.com/lift-stack/lift24-s29-html5bp-kickstrap.g8
-[5]: http://github.com/lift-stack/lift24-s29-mvc-blank.g8
-[6]: http://github.com/lift-stack/lift24-s29-mvc-html5bp.g8
-[7]: http://github.com/lift-stack/lift24-s29-mvc-html5bp-bootstrap.g8
-[8]: http://github.com/lift-stack/lift24-s29-mvc-html5bp-kickstrap.g8
+[0]: http://github.com/liftstack/giter8-templates
+[1]: http://github.com/liftstack/lift24-s29-blank.g8
+[2]: http://github.com/liftstack/lift24-s29-html5bp.g8
+[3]: http://github.com/liftstack/lift24-s29-html5bp-bootstrap.g8
+[4]: http://github.com/liftstack/lift24-s29-html5bp-kickstrap.g8
+[5]: http://github.com/liftstack/lift24-s29-mvc-blank.g8
+[6]: http://github.com/liftstack/lift24-s29-mvc-html5bp.g8
+[7]: http://github.com/liftstack/lift24-s29-mvc-html5bp-bootstrap.g8
+[8]: http://github.com/liftstack/lift24-s29-mvc-html5bp-kickstrap.g8
 [9]: http://html5boilerplate.com/
 [10]: http://twitter.github.com/bootstrap/
 [11]: http://ajkochanowicz.github.com/Kickstrap/

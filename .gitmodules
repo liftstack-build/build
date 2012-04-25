@@ -1,18 +1,18 @@
 [submodule "submodules/html5-boilerplate"]
 	path = submodules/html5-boilerplate
-	url = git@github.com:lift-stack/html5-boilerplate.git
+	url = git@github.com:liftstack/html5-boilerplate.git
 [submodule "submodules/kickstrap"]
 	path = submodules/kickstrap
-	url = git@github.com:lift-stack/Kickstrap.git
+	url = git@github.com:liftstack/Kickstrap.git
 [submodule "submodules/bootstrap"]
 	path = submodules/bootstrap
 	url = git://github.com/twitter/bootstrap.git
 [submodule "submodules/lift_24_sbt"]
 	path = submodules/lift_24_sbt
-	url = git@github.com:lift-stack/lift_24_sbt.git
+	url = git@github.com:liftstack/lift_24_sbt.git
 [submodule "submodules/gitbackup"]
 	path = submodules/gitbackup
-	url = git@github.com:lift-stack/gitbackup.git
+	url = git@github.com:liftstack/gitbackup.git
 [submodule "submodules/giter8-default"]
 	path = submodules/giter8-default
-	url = git@github.com:lift-stack/giter8-default.git
+	url = git@github.com:liftstack/giter8-default.git

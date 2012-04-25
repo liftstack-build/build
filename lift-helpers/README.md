@@ -9,7 +9,7 @@
 <div></div>
 
     cd ~/bin (or wherever you want giter8 to create your Lift project directory)
-    g8 lift-stack/lift24-s29-blank (or see [list of available Lift project templates][7])
+    g8 liftstack/lift24-s29-blank (or see [list of available Lift project templates][7])
     cd lift24-s29-blank (or whatever project name you choose from previous step)
     sbt container:start "~ compile"
 
@@ -29,7 +29,7 @@ giter8 (g8) downloads this Lift project template from github.  The sbt commandli
 To use [Lifty][6], split up the sbt command above and insert the Lifty directive as such:
 
     cd ~/bin (or wherever you want giter8 to create your Lift project directory)
-    g8 lift-stack/lift24-s29-blank (or see [list of available Lift project templates][7])
+    g8 liftstack/lift24-s29-blank (or see [list of available Lift project templates][7])
     cd lift24-s29-blank (or whatever project name you choose from previous step)
     sbt 
     lifty learn lift https://raw.github.com/Lifty/lifty/master/lifty-recipe/lifty.json
@@ -61,7 +61,7 @@ To use [Lifty][6], split up the sbt command above and insert the Lifty directive
 [4]:  http://github.com/n8han/giter8 
 [5]:  http://github.com/paulp/sbt-extras
 [6]:  http://github.com/Lifty/lifty 
-[7]:  http://github.com/lift-stack/giter8-templates
+[7]:  http://github.com/liftstack/giter8-templates
 [8]:  http://typesafe.com/stack/download 
 [9]:  http://simply.liftweb.net/index-Chapter-2.html#toc-Chapter-2
 [10]: https://github.com/harrah/xsbt/wiki/Triggered-Execution

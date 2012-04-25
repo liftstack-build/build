@@ -16,8 +16,8 @@
 # ./submodules/html5-boilerplate        # HTML Boilerplate, via 'git submodule add -f git://github.com/h5bp/html5-boilerplate.git', for dynamic insertion into template
 # ./submodules/kickstrap                # Kickstrap (Bootstrap fork), via 'git submodule add -f git://github.com/ajkochanowicz/Kickstrap.git', for dynamic insertion into template
 # ./submodules/lift_24_sbt              # Lift 2.4 project templates, for combination with giter8-default and other submodules
-                                        #   via https://github.com/lift-stack/lift_24_sbt
-# get all by cloning https://github.com/lift-stack/giter8-templates
+                                        #   via https://github.com/liftstack/lift_24_sbt
+# get all by cloning https://github.com/liftstack/giter8-templates
 
 # Usage:
 # sh build-lift-giter8-project.sh
@@ -29,7 +29,7 @@
 #     ./submodules/lift_24_sbt [3]
 # 2.  ./giter8 project template (created by running 'g8 n8han/giter8')
 # 3.  ./lift-helpers (.gitconfig, README.md)
-# [3]: https://github.com/lift-stack/lift_24_sbt
+# [3]: https://github.com/liftstack/lift_24_sbt
 
 # Steps:
 # TLDR - copy giter8 project template to target dir, then copy lift components and helpers into it, modify config files

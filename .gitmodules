@@ -19,3 +19,6 @@
 [submodule "submodules/320andup"]
 	path = submodules/320andup
 	url = git@github.com:repos-html5/320andup.git
+[submodule "submodules/foundation"]
+	path = submodules/foundation
+	url = git@github.com:liftstack/foundation.git

@@ -22,3 +22,6 @@
 [submodule "submodules/foundation"]
 	path = submodules/foundation
 	url = git@github.com:liftstack/foundation.git
+[submodule "initializr-html5bp-bootstrap"]
+	path = initializr-html5bp-bootstrap
+	url = git@github.com:liftstack/initializr-html5bp-bootstrap.git

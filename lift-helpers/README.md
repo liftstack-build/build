@@ -3,7 +3,7 @@
 ### Quick Start:
 
 1.  Install [Java SDK][1] or [OpenJDK][0].
-2.  Install the [Typesafe Stack][8] (or separately Scala, [sbt][3], [sbt-extras][5], [giter8][4]) \*
+2.  Install Scala, [giter8][4], [sbt][3].  [sbt-extras][5] is optional but recommended. (or install the all-in-one [Typesafe Stack][8]) \*
 3.  Install Lift and this template using giter8, run it with sbt:
 
 <div></div>

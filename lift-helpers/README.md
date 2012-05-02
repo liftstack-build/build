@@ -14,7 +14,7 @@
     sbt container:start "~ compile"
 
 Lift will be running on localhost:8080.  You can begin developing your project and SBT will automatically recompile
-it on the fly as you save changes to .scala files.  Try it out by [building a multiuser chap app in about 20 lines of code][9].
+it on the fly as you create and save changes to files (what "~ compile" does).  Try it out by [building a multiuser chap app in about 20 lines of code][9].
     
 ### Explanation
 

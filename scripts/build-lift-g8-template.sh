@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -
 
 # Build the Lift giter8 templates.
 

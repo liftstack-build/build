@@ -18,7 +18,8 @@ fucked*
 !submodules/lift_24_sbt/*
 !submodules/lift-quickstart
 !submodules/lift-quickstart/*
-
+!target*
+!target/*
 
 # new and old versions of conffiles, stored by dpkg
 *.dpkg-*

@@ -12,8 +12,8 @@
 # ./giter8-default                      # default giter8 project template, created by running 'g8 n8han/giter8'
 # ./lift-helpers                        # code snippets, readme's, etc for dynamic insertion into templates
 # ./scripts                             # this script and meta scripts for creating lift giter8 templates
-# ./submodules/bootstrap                # Twitter Bootstrap, via 'git submodule add -f git://github.com/twitter/bootstrap.git', for dynamic insertion into template
-# ./submodules/html5-boilerplate        # HTML Boilerplate, via 'git submodule add -f git://github.com/h5bp/html5-boilerplate.git', for dynamic insertion into template
+# ./submodules/html5bp                  # HTML Boilerplate, via 'git submodule add -f git://github.com/h5bp/html5-boilerplate.git', for dynamic insertion into template
+# ./submodules/html5bp-bootstrap-initializr # Twitter Bootstrap + HTML5 Boilerplate via Initializr.com, via 'git submodule add -f git://github.com/twitter/bootstrap.git', for dynamic insertion into template
 # ./submodules/kickstrap                # Kickstrap (Bootstrap fork), via 'git submodule add -f git://github.com/ajkochanowicz/Kickstrap.git', for dynamic insertion into template
 # ./submodules/lift_24_sbt              # Lift 2.4 project templates, for combination with giter8-default and other submodules
                                         #   via https://github.com/liftstack/lift_24_sbt
@@ -51,7 +51,8 @@ KICKSTRAP="0"                                           #-kickstrap; -ks
 GITER8_TEMPLATE="./submodules/giter8-default"           #-g8-loc; -gl
 LIFT="./submodules/lift_24_sbt"                         #-lift-loc; -ll
 HELPERS="./lift-helpers"                                #-helpers-loc; -hl
-TARGET="lift24-s29-blank.g8"                            #-target-loc; -tl
+TARGET_DIR="./target"                                   #-target-dir; -td
+TARGET_NAME="lift24-s29-blank.g8"                       #-target-name; -tn
 GITBACKUP="./submodules/gitbackup"                      #-gitbackup; -gb
 TARGET_GITBACKUP="$GITBACKUP/.git.$TARGET"              #-target-gitbackup; -tgb
 TARGET_BUILD="$TARGET/src/main/g8"                      #-target-build; -tb
@@ -91,11 +92,11 @@ LIFT_VERSION="2.4"                              #-lift-version; -lv
 # override above vars with any passed commandline opts (getops can't parse GNU style \
 # -- long options, so both long and short denoted by single - )
 while getopts "mvc:html5bp:h5b:bootstrap:bs:kickstrap:ks:g8-loc:gl:lift-loc:ll:\
-    helpers-loc:hl:target-loc:tl:gitbackup:gb:target-gitbackup:tgb:target-build:tb:\
-    lift-boot:lb:lift-boot-pattern:lbp:lift-html5-snippet:lhs:lift-build-sbt:lbs:\
-    lift-plugins-sbt:lps:lift-build-sbt-snippet:lbss:lift-plugin-sbt-snippet:lpss:\
-    lifty-build-sbt-snippet:lybss:lifty-plugin-sbt-snippet:lypss:lift-properties:lp:\
-    project-org:po:project-name:pn:sbt-version:sv:project-version:pv:\
+    helpers-loc:hl:target-dir:td:target-name:tl:gitbackup:gb:target-gitbackup:tgb:\
+    target-build:tb:lift-boot:lb:lift-boot-pattern:lbp:lift-html5-snippet:lhs:\
+    lift-build-sbt:lbs:lift-plugins-sbt:lps:lift-build-sbt-snippet:lbss:
+    lift-plugin-sbt-snippet:lpss:lifty-build-sbt-snippet:lybss:lifty-plugin-sbt-snippet:\
+    lypss:lift-properties:lp:project-org:po:project-name:pn:sbt-version:sv:project-version:pv:\
     def-scala-version:dsv:build-scala-versions:bsv:project-initialize:pi:lift-version:lv:
     lift-properties-template:lpt"\
     optionName; do
@@ -106,8 +107,10 @@ while getopts "mvc:html5bp:h5b:bootstrap:bs:kickstrap:ks:g8-loc:gl:lift-loc:ll:\
         ll)                         LIFT="$OPTARG";;
         helpers-loc)                HELPERS="$OPTARG";;
         hl)                         HELPERS="$OPTARG";;
-        target-loc)                 TARGET="$OPTARG";;
-        tl)                         TARGET="$OPTARG";;
+        target-dir)                 TARGET_DIR="$OPTARG";;
+        td)                         TARGET_DIR="$OPTARG";;
+        target-name)                TARGET_NAME="$OPTARG";;
+        tn)                         TARGET_NAME="$OPTARG";;
         gitbackup)                  GITBACKUP="$OPTARG";;
         gb)                         GITBACKUP="$OPTARG";;
         target-gitbackup)           TARGET_GITBACKUP="$OPTARG";;
@@ -162,6 +165,15 @@ while getopts "mvc:html5bp:h5b:bootstrap:bs:kickstrap:ks:g8-loc:gl:lift-loc:ll:\
         [?]) printErrorHelpAndExit "$badOptionHelp";;
     esac
 done
+
+# rebuild target-related vars after cmdline params
+TARGET="$TARGET_DIR/$TARGET_NAME"
+TARGET_GITBACKUP="$GITBACKUP/.git.$TARGET"              #-target-gitbackup; -tgb
+TARGET_BUILD="$TARGET/src/main/g8"                      #-target-build; -tb
+LIFT_BOOT="$TARGET/src/main/g8/src/main/scala/bootstrap/liftweb/Boot.scala"     #lift-boot; -lb
+LIFT_SBT_BUILD="$TARGET_BUILD/build.sbt"                #-lift-build-sbt; -lbs
+LIFT_SBT_PLUGINS="$TARGET_BUILD/project/plugins.sbt"    #-lift-plugins-sbt; -lps
+DEFAULT_LIFT_PROPERTIES="$TARGET/src/main/g8/project/build.properties"
 
 # output build params; TODO: add last chance modify/abort option
 echo "Building with:"

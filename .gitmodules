@@ -1,0 +1,24 @@
+[submodule "submodules/html5-boilerplate"]
+	path = submodules/html5-boilerplate
+	url = git@github.com:liftstack/html5-boilerplate.git
+[submodule "submodules/kickstrap"]
+	path = submodules/kickstrap
+	url = git@github.com:liftstack/Kickstrap.git
+[submodule "submodules/lift_24_sbt"]
+	path = submodules/lift_24_sbt
+	url = git@github.com:liftstack/lift_24_sbt.git
+[submodule "submodules/gitbackup"]
+	path = submodules/gitbackup
+	url = git@github.com:liftstack/gitbackup.git
+[submodule "submodules/giter8-default"]
+	path = submodules/giter8-default
+	url = git@github.com:liftstack/giter8-default.git
+[submodule "submodules/320andup"]
+	path = submodules/320andup
+	url = git@github.com:repos-html5/320andup.git
+[submodule "submodules/foundation"]
+	path = submodules/foundation
+	url = git@github.com:liftstack/foundation.git
+[submodule "submodules/initializr-html5bp-bootstrap"]
+	path = submodules/initializr-html5bp-bootstrap
+	url = git@github.com:liftstack/initializr-html5bp-bootstrap.git

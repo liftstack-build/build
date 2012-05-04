@@ -1,6 +1,3 @@
-[submodule "submodules/html5-boilerplate"]
-	path = submodules/html5-boilerplate
-	url = git@github.com:liftstack/html5-boilerplate.git
 [submodule "submodules/kickstrap"]
 	path = submodules/kickstrap
 	url = git@github.com:liftstack/Kickstrap.git
@@ -22,3 +19,6 @@
 [submodule "submodules/lift-quickstart"]
 	path = submodules/lift-quickstart
 	url = git@github.com:liftstack/lift-quickstart.git
+[submodule "submodules/submodules/html5bp-bootstrap"]
+	path = submodules/submodules/html5bp-bootstrap
+	url = git@github.com:liftstack/initializr-html5bp-bootstrap.git

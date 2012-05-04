@@ -19,3 +19,9 @@
 [submodule "submodules/lift-quickstart"]
 	path = submodules/lift-quickstart
 	url = git@github.com:liftstack/lift-quickstart.git
+[submodule "submodules/html5bp"]
+	path = submodules/html5bp
+	url = git@github.com:liftstack/html5-boilerplate.git
+[submodule "submodules/html5bp-bootstrap-initializr"]
+	path = submodules/html5bp-bootstrap-initializr
+	url = git@github.com:liftstack/initializr-html5bp-bootstrap.git

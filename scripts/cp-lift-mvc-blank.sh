@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -
 
 #cp -r ~/bin/projects/lift/liftstack/lift-24-sbt/scala_29/lift_blank/* ./lift-24-s29-blank.g8
 #cp -r ~/bin/projects/lift/liftstack/lift-24-sbt/scala_29/lift_blank/* ./lift-24-s29-html5bp.g8

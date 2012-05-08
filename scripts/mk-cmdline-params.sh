@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -
 
 # quick script to compile and format cmdline params for getopts in build script
 # $1 is input, single column list of cmdline params

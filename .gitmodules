@@ -1,6 +1,3 @@
-[submodule "submodules/lift_24_sbt"]
-	path = submodules/lift_24_sbt
-	url = git@github.com:liftstack/lift_24_sbt.git
 [submodule "submodules/lift-quickstart"]
 	path = submodules/lift-quickstart
 	url = git@github.com:liftstack/lift-quickstart.git

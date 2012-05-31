@@ -4,9 +4,6 @@
 [submodule "submodules/lift_24_sbt"]
 	path = submodules/lift_24_sbt
 	url = git@github.com:liftstack/lift_24_sbt.git
-[submodule "submodules/gitbackup"]
-	path = submodules/gitbackup
-	url = git@github.com:liftstack/gitbackup.git
 [submodule "submodules/giter8-default"]
 	path = submodules/giter8-default
 	url = git@github.com:liftstack/giter8-default.git

@@ -1,1 +1,1 @@
-/home/kurtosis/bin/scripts/git-submodule-add.sh
+/home/kurtosis/bin/scripts/git/git-submodule-add.sh

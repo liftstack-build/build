@@ -53,6 +53,7 @@ LIFT="./submodules/lift_24_sbt"                         #-lift-loc; -ll
 HELPERS="./lift-helpers"                                #-helpers-loc; -hl
 TARGET_DIR="./target"                                   #-target-dir; -td
 TARGET_NAME="lift24-s29-blank.g8"                       #-target-name; -tn
+TARGET="$TARGET_DIR/$TARGET_NAME"                       # not a cmdline param, composed from other param# not a cmdline param, composed from other params# not a cmdline param, composed from other params# not a cmdline param, composed from other paramss 
 GITBACKUP="./submodules/gitbackup"                      #-gitbackup; -gb
 TARGET_GITBACKUP="$GITBACKUP/.git.$TARGET"              #-target-gitbackup; -tgb
 TARGET_BUILD="$TARGET/src/main/g8"                      #-target-build; -tb
@@ -68,7 +69,7 @@ LIFTY_SBT_PLUGIN_SNIPPET="$HELPERS/lifty-plugins.sbt"   #-lifty-plugin-sbt-snipp
 LIFT_PROPERTIES_TEMPLATE="$HELPERS/build.properties"    #-lift-properties-template; -lpt
 
 # Lift properties config file keys
-DEFAULT_LIFT_PROPERTIES="$TARGET/src/main/g8/project/build.properties"
+DEFAULT_LIFT_PROPERTIES="$TARGET/src/gain/g8/project/build.properties"
 DEFAULT_PROJECT_ORGANIZATION="project.organization"
 DEFAULT_PROJECT_NAME="project.name"
 DEFAULT_SBT_VERSION="sbt.version"
@@ -177,17 +178,17 @@ DEFAULT_LIFT_PROPERTIES="$TARGET/src/main/g8/project/build.properties"
 
 # output build params; TODO: add last chance modify/abort option
 echo "Building with:"
-echo "GITER8_TEMPLATE:              $GITER8_TEMPLATE"
-echo "LIFT:                         $LIFT"     
-echo "HELPERS:                      $HELPERS" 
-echo "TARGET:                       $TARGET" 
-echo "TARGET_GITBACKUP:             $TARGET_GITBACKUP"
-echo "TARGET_BUILD:                 $TARGET_BUILD"
-echo "LIFT_BOOT:                    $LIFT_BOOT" 
-echo "LIFT_BOOT_PATTERN:            $LIFT_BOOT_PATTERN"
-echo "LIFT_HTML5_SNIPPET:           $LIFT_HTML5_SNIPPET"
-echo "LIFT_PROPERTIES_TEMPLATE:     $LIFT_PROPERTIES_TEMPLATE"
-echo "LIFT_PROPERTIES:              $LIFT_PROPERTIES"
+echo "GITER8_TEMPLATE:                      $GITER8_TEMPLATE"
+echo "LIFT:                                 $LIFT"     
+echo "HELPERS:                              $HELPERS" 
+echo "TARGET:                               $TARGET" 
+echo "TARGET_GITBACKUP:                     $TARGET_GITBACKUP"
+echo "TARGET_BUILD:                         $TARGET_BUILD"
+echo "LIFT_BOOT:                            $LIFT_BOOT" 
+echo "LIFT_BOOT_PATTERN:                    $LIFT_BOOT_PATTERN"
+echo "LIFT_HTML5_SNIPPET:                   $LIFT_HTML5_SNIPPET"
+echo "LIFT_PROPERTIES_TEMPLATE:             $LIFT_PROPERTIES_TEMPLATE"
+echo "LIFT_PROPERTIES:                      $LIFT_PROPERTIES"
 echo "$DEFAULT_PROJECT_ORGANIZATION:        $PROJECT_ORGANIZATION"
 echo "$DEFAULT_PROJECT_NAME:                $PROJECT_NAME"
 echo "$DEFAULT_SBT_VERSION:                 $SBT_VERSION"
@@ -196,16 +197,16 @@ echo "$DEFAULT_DEF_SCALA_VERSION:           $DEF_SCALA_VERSION"
 echo "$DEFAULT_BUILD_SCALA_VERSIONS:        $BUILD_SCALA_VERSIONS"
 echo "$DEFAULT_PROJECT_INITIALIZE:          $PROJECT_INITIALIZE"
 echo "$DEFAULT_LIFT_VERSION:                $LIFT_VERSION"
-echo "LIFT_SBT_BUILD:               $LIFT_SBT_BUILD"
-echo "LIFT_SBT_PLUGINS:             $LIFT_SBT_PLUGINS"
-echo "LIFT_SBT_BUILD_SNIPPET:       $LIFT_SBT_BUILD_SNIPPET"
-echo "LIFT_SBT_PLUGIN_SNIPPET:      $LIFT_SBT_PLUGIN_SNIPPET"
-echo "LIFTY_SBT_BUILD_SNIPPET:      $LIFTY_SBT_BUILD_SNIPPET"
-echo "LIFTY_SBT_PLUGIN_SNIPPET:     $LIFTY_SBT_PLUGIN_SNIPPET"
-echo "MVC:                          $MVC"
-echo "HTML5BP:                      $HTML5BP"
-echo "BOOTSTRAP:                    $BOOTSTRAP"
-echo "KICKSTRAP:                    $KICKSTRAP"
+echo "LIFT_SBT_BUILD:                       $LIFT_SBT_BUILD"
+echo "LIFT_SBT_PLUGINS:                     $LIFT_SBT_PLUGINS"
+echo "LIFT_SBT_BUILD_SNIPPET:               $LIFT_SBT_BUILD_SNIPPET"
+echo "LIFT_SBT_PLUGIN_SNIPPET:              $LIFT_SBT_PLUGIN_SNIPPET"
+echo "LIFTY_SBT_BUILD_SNIPPET:              $LIFTY_SBT_BUILD_SNIPPET"
+echo "LIFTY_SBT_PLUGIN_SNIPPET:             $LIFTY_SBT_PLUGIN_SNIPPET"
+echo "MVC:                                  $MVC"
+echo "HTML5BP:                              $HTML5BP"
+echo "BOOTSTRAP:                            $BOOTSTRAP"
+echo "KICKSTRAP:                            $KICKSTRAP"
 
 # Main
 if [ -d "$TARGET" ]; then 

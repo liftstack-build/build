@@ -120,3 +120,6 @@ build
 *.perspectivev3
 .oh-my-zsh
 
+# # LiftStack Specific #
+# ######################
+submodules.backup

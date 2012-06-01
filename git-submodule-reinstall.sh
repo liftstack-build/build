@@ -1,6 +1,6 @@
 #!/usr/bin/env bash -
 
-: << '--COMMENT--'
+#: << '--COMMENT--'
 git submodule add git@github.com:liftstack/320andup.git submodules/320andup
 git submodule add git@github.com:liftstack/foundation.git submodules/foundation
 git submodule add git@github.com:liftstack/gitbackup.git submodules/gitbackup
@@ -26,4 +26,4 @@ cd ~/bin/projects/lift/liftstack/build/submodules/lift_24_sbt_d6y
 git remote add upstream git://github.com/lift/lift_24_sbt_d6y.git
 cd ~/bin/projects/lift/liftstack/build/submodules/lift-quickstart
 git remote add upstream git://github.com/viktortnk/lift-quickstart.git
---COMMENT-- 
+#--COMMENT-- 

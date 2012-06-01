@@ -6,6 +6,9 @@
 #!*.*
 
 # # ignore all lift template directories.  they are their own repo's.  this repo only for scripts for making giter8 templates, README, etc.
+# # LiftStack Specific #
+# ######################
+submodules.backup
 test
 lift*
 fucked*
@@ -14,7 +17,7 @@ fucked*
 !lift_24_sbt/*
 !lift-helpers
 !lift-helpers/*
-!submodules/lift_24_sbt
+!submodules/
 !submodules/lift_24_sbt/*
 !submodules/lift-quickstart
 !submodules/lift-quickstart/*
@@ -120,6 +123,3 @@ build
 *.perspectivev3
 .oh-my-zsh
 
-# # LiftStack Specific #
-# ######################
-submodules.backup

@@ -4,3 +4,18 @@
 [submodule "submodules/320andup"]
 	path = submodules/320andup
 	url = git@github.com:liftstack/320andup.git
+[submodule "submodules/gitbackup"]
+	path = submodules/gitbackup
+	url = git@github.com:liftstack/gitbackup.git
+[submodule "submodules/giter8-default"]
+	path = submodules/giter8-default
+	url = git@github.com:liftstack/giter8-default.git
+[submodule "submodules/html5-boilerplate"]
+	path = submodules/html5-boilerplate
+	url = git@github.com:liftstack/html5-boilerplate
+[submodule "submodules/lift_24_sbt"]
+	path = submodules/lift_24_sbt
+	url = git@github.com:liftstack/lift_24_sbt.git
+[submodule "submodules/lift-quickstart"]
+	path = submodules/lift-quickstart
+	url = git@github.com:liftstack/lift-quickstart.git

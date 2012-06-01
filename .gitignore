@@ -12,6 +12,8 @@ submodules.backup
 test
 lift*
 fucked*
+target*
+target/*
 !lifty*
 !lift_24_sbt
 !lift_24_sbt/*
@@ -24,8 +26,6 @@ fucked*
 !submodules/lift_24_sbt_d6y/*
 !submodules/lift-quickstart
 !submodules/lift-quickstart/*
-!target*
-!target/*
 
 # new and old versions of conffiles, stored by dpkg
 *.dpkg-*

@@ -1,0 +1,17 @@
+
+# # Lift and SBT project Files to Ignore #
+# ########################################
+# target, $target$, etc is SBT compiled binary directory
+target
+*target*
+.class
+.jar
+
+# # Private #
+# ###########
+.ssh
+ssh
+id_rsa
+id_dsa
+identity
+

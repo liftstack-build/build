@@ -1,1 +1,1 @@
-/home/kurtosis/bin/scripts/git/git-submodule-rm-all.sh
+scripts/git-submodule-rm-all.sh

@@ -1,6 +1,3 @@
-[submodule "submodules/giter8-default"]
-	path = submodules/giter8-default
-	url = git@github.com:liftstack/giter8-default.git
 [submodule "submodules/html5-boilerplate"]
 	path = submodules/html5-boilerplate
 	url = git@github.com:liftstack/html5-boilerplate

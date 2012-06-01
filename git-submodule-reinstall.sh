@@ -7,7 +7,7 @@ git submodule add git@github.com:liftstack/gitbackup.git submodules/gitbackup
 git submodule add git@github.com:liftstack/giter8-default.git submodules/giter8-default
 git submodule add git@github.com:liftstack/html5-boilerplate submodules/html5-boilerplate
 git submodule add git@github.com:liftstack/html5bp-bootstrap-initializr submodules/html5bp-bootstrap-initializr
-git submodule add git@github.com:liftstack/kickstrap.git submodules/kickstrap
+git submodule add git@github.com:liftstack/Kickstrap.git submodules/kickstrap
 git submodule add git@github.com:liftstack/lift_24_sbt.git submodules/lift_24_sbt
 git submodule add git@github.com:liftstack/lift_24_sbt_d6y.git submodules/lift_24_sbt_d6y
 git submodule add git@github.com:liftstack/lift-quickstart.git submodules/lift-quickstart

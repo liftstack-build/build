@@ -1,1 +1,0 @@
-/home/kurtosis/bin/scripts/git/git-rm-submodule.sh

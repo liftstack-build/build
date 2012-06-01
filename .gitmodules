@@ -22,3 +22,6 @@
 [submodule "submodules/lift-quickstart"]
 	path = submodules/lift-quickstart
 	url = git@github.com:liftstack/lift-quickstart.git
+[submodule "submodules/Kickstrap"]
+	path = submodules/Kickstrap
+	url = git@github.com:liftstack/Kickstrap.git

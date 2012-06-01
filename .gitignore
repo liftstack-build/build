@@ -18,7 +18,10 @@ fucked*
 !lift-helpers
 !lift-helpers/*
 !submodules/
+!submodules/lift_24_sbt
 !submodules/lift_24_sbt/*
+!submodules/lift_24_sbt_d6y
+!submodules/lift_24_sbt_d6y/*
 !submodules/lift-quickstart
 !submodules/lift-quickstart/*
 !target*

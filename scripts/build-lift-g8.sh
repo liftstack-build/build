@@ -49,13 +49,14 @@ KICKSTRAP="0"                                           #-kickstrap; -ks
 
 # Default params
 GITER8_TEMPLATE="./submodules/giter8-default"           #-g8-loc; -gl
-LIFT="./submodules/lift_24_sbt"                         #-lift-loc; -ll
+LIFT="./submodules/lift_24_sbt/scala_29/lift_blank"     #-lift-loc; -ll
+LIFT_MVC="./submodules/lift_24_sbt/scala_29/lift_mvc"   #-lift-loc-mvc; -llm
 HELPERS="./lift-helpers"                                #-helpers-loc; -hl
 TARGET_DIR="./target"                                   #-target-dir; -td
 TARGET_NAME="lift24-s29-blank.g8"                       #-target-name; -tn
 TARGET="$TARGET_DIR/$TARGET_NAME"                       # not a cmdline param, composed from other param# not a cmdline param, composed from other params# not a cmdline param, composed from other params# not a cmdline param, composed from other paramss 
 GITBACKUP="./submodules/gitbackup"                      #-gitbackup; -gb
-TARGET_GITBACKUP="$GITBACKUP/.git.$TARGET"              #-target-gitbackup; -tgb
+TARGET_GITBACKUP="$GITBACKUP/.git.$TARGET_NAME"         #-target-gitbackup; -tgb
 TARGET_BUILD="$TARGET/src/main/g8"                      #-target-build; -tb
 LIFT_BOOT="$TARGET/src/main/g8/src/main/scala/bootstrap/liftweb/Boot.scala"     #lift-boot; -lb
 LIFT_BOOT_PATTERN="def boot {"                          #-lift-boot-pattern; -lbp
@@ -69,7 +70,7 @@ LIFTY_SBT_PLUGIN_SNIPPET="$HELPERS/lifty-plugins.sbt"   #-lifty-plugin-sbt-snipp
 LIFT_PROPERTIES_TEMPLATE="$HELPERS/build.properties"    #-lift-properties-template; -lpt
 
 # Lift properties config file keys
-DEFAULT_LIFT_PROPERTIES="$TARGET/src/gain/g8/project/build.properties"
+DEFAULT_LIFT_PROPERTIES="$TARGET/src/main/g8/project/build.properties"
 DEFAULT_PROJECT_ORGANIZATION="project.organization"
 DEFAULT_PROJECT_NAME="project.name"
 DEFAULT_SBT_VERSION="sbt.version"
@@ -85,27 +86,29 @@ PROJECT_ORGANIZATION="Lift"                     #-project-org; -po
 PROJECT_NAME="Lift SBT Template"                #-project-name; -pn
 SBT_VERSION="0.11.2"                            #-sbt-version; -sv
 PROJECT_VERSION="0.0.0"                         #-project-version; -pv
-DEF_SCALA_VERSION="2.9.1"                       #-def-scala-version; -dsv
-BUILD_SCALA_VERSIONS="2.9.1"                    #-build-scala-versions; -bsv
+DEF_SCALA_VERSION="2.9.2"                       #-def-scala-version; -dsv
+BUILD_SCALA_VERSIONS="2.9.2"                    #-build-scala-versions; -bsv
 PROJECT_INITIALIZE="false"                      #-project-initialize; -pi
 LIFT_VERSION="2.4"                              #-lift-version; -lv
 
 # override above vars with any passed commandline opts (getops can't parse GNU style \
 # -- long options, so both long and short denoted by single - )
 while getopts "mvc:html5bp:h5b:bootstrap:bs:kickstrap:ks:g8-loc:gl:lift-loc:ll:\
-    helpers-loc:hl:target-dir:td:target-name:tl:gitbackup:gb:target-gitbackup:tgb:\
-    target-build:tb:lift-boot:lb:lift-boot-pattern:lbp:lift-html5-snippet:lhs:\
-    lift-build-sbt:lbs:lift-plugins-sbt:lps:lift-build-sbt-snippet:lbss:
-    lift-plugin-sbt-snippet:lpss:lifty-build-sbt-snippet:lybss:lifty-plugin-sbt-snippet:\
-    lypss:lift-properties:lp:project-org:po:project-name:pn:sbt-version:sv:project-version:pv:\
-    def-scala-version:dsv:build-scala-versions:bsv:project-initialize:pi:lift-version:lv:
-    lift-properties-template:lpt"\
+    lift-loc-mvc:llm:helpers-loc:hl:target-dir:td:target-name:tl:gitbackup:gb:\
+    target-gitbackup:tgb:target-build:tb:lift-boot:lb:lift-boot-pattern:lbp:\
+    lift-html5-snippet:lhs:lift-build-sbt:lbs:lift-plugins-sbt:lps:lift-build-sbt-snippet:\
+    lbss:lift-plugin-sbt-snippet:lpss:lifty-build-sbt-snippet:lybss:\
+    lifty-plugin-sbt-snippet:lypss:lift-properties:lp:project-org:po:project-name:pn:\
+    sbt-version:sv:project-version:pv:def-scala-version:dsv:build-scala-versions:bsv:\
+    project-initialize:pi:lift-version:lv:lift-properties-template:lpt"\
     optionName; do
     case "$optionName" in 
         g8-loc)                     GITER8_TEMPLATE="$OPTARG";;
         gl)                         GITER8_TEMPLATE="$OPTARG";;
         lift-loc)                   LIFT="$OPTARG";;
         ll)                         LIFT="$OPTARG";;
+        lift-loc-mvc)               LIFT_MVC="$OPTARG";;
+        llm)                        LIFT_MVC="$OPTARG";;
         helpers-loc)                HELPERS="$OPTARG";;
         hl)                         HELPERS="$OPTARG";;
         target-dir)                 TARGET_DIR="$OPTARG";;
@@ -169,10 +172,10 @@ done
 
 # rebuild target-related vars after cmdline params
 TARGET="$TARGET_DIR/$TARGET_NAME"
-TARGET_GITBACKUP="$GITBACKUP/.git.$TARGET"              #-target-gitbackup; -tgb
+TARGET_GITBACKUP="$GITBACKUP/.git.$TARGET_NAME"         #-target-gitbackup; -tgb
 TARGET_BUILD="$TARGET/src/main/g8"                      #-target-build; -tb
 LIFT_BOOT="$TARGET/src/main/g8/src/main/scala/bootstrap/liftweb/Boot.scala"     #lift-boot; -lb
-LIFT_SBT_BUILD="$TARGET_BUILD/build.sbt"                #-lift-build-sbt; -lbs
+LIFT_SBT_BUILD="$TARGET_BUILD/project/build.sbt"        #-lift-build-sbt; -lbs
 LIFT_SBT_PLUGINS="$TARGET_BUILD/project/plugins.sbt"    #-lift-plugins-sbt; -lps
 DEFAULT_LIFT_PROPERTIES="$TARGET/src/main/g8/project/build.properties"
 
@@ -272,7 +275,8 @@ else
         touch $LIFT_SBT_PLUGINS;
     fi
     #cat $LIFT_SBT_PLUGIN_SNIPPET >> $LIFT_SBT_PLUGINS
-    cat $LIFTY_SBT_PLUGIN_SNIPPET >> $LIFT_SBT_PLUGINS
+    #cat $LIFTY_SBT_PLUGIN_SNIPPET >> $LIFT_SBT_PLUGINS
+    ## don't really need this anymore since g8 and SBT handle everything lifty does
 
     # add Lift and Lifty to $TARGET_BUILD/build.sbt
     if [ ! -e "$LIFT_SBT_BUILD" ]; then 

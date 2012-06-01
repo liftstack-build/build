@@ -16,9 +16,6 @@
 [submodule "submodules/html5bp-bootstrap-initializr"]
 	path = submodules/html5bp-bootstrap-initializr
 	url = git@github.com:liftstack/html5bp-bootstrap-initializr
-[submodule "submodules/kickstrap"]
-	path = submodules/kickstrap
-	url = git@github.com:liftstack/kickstrap.git
 [submodule "submodules/lift_24_sbt"]
 	path = submodules/lift_24_sbt
 	url = git@github.com:liftstack/lift_24_sbt.git

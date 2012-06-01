@@ -1,6 +1,3 @@
-[submodule "submodules/foundation"]
-	path = submodules/foundation
-	url = git@github.com:liftstack/foundation.git
 [submodule "submodules/gitbackup"]
 	path = submodules/gitbackup
 	url = git@github.com:liftstack/gitbackup.git

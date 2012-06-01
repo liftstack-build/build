@@ -7,9 +7,6 @@
 [submodule "submodules/giter8-default"]
 	path = submodules/giter8-default
 	url = git@github.com:liftstack/giter8-default.git
-[submodule "submodules/lift_24_sbt"]
-	path = submodules/lift_24_sbt
-	url = git@github.com:liftstack/lift_24_sbt.git
 [submodule "submodules/lift-quickstart"]
 	path = submodules/lift-quickstart
 	url = git@github.com:liftstack/lift-quickstart.git

@@ -25,6 +25,3 @@
 [submodule "submodules/Kickstrap"]
 	path = submodules/Kickstrap
 	url = git@github.com:liftstack/Kickstrap.git
-[submodule "lift_24_sbt_d6y"]
-	path = lift_24_sbt_d6y
-	url = git@github.com:liftstack/lift_24_sbt_d6y.git
